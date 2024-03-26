@@ -11,14 +11,12 @@ import java.util.List;
 public class Location {
 
     @Id
-    private String locationId;
+    private int id;
 
     @Column
-    private String locationName;
+    private String name;
 
     @Column
+    //수용량
     private int capacity;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "")
-    private List<Part> partListInLocation;
 }

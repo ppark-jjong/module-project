@@ -9,14 +9,18 @@ import java.util.List;
 @Data
 public class Product {
     @Id
-    private int productId;
+    private int id;
 
     @Column
-    private int productType;
+    private int weight;
 
     @Column
-    private int productWeight;
+    private int price;
+
+    @Column
+    private String name;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "productIdToPart")
     private List<Part> partListIdToProduct;
+
 }
