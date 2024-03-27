@@ -16,6 +16,12 @@ public class PartDto {
 
     private Product productIdToPart;
 
+    public PartDto(Location locationIdToPart, Storage storageIdToPart, Product productIdToPart) {
+        this.locationIdToPart = locationIdToPart;
+        this.storageIdToPart = storageIdToPart;
+        this.productIdToPart = productIdToPart;
+    }
+
     public Part toEntity() {
         Part part = new Part();
         part.setId(id);
