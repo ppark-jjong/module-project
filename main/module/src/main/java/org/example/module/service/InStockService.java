@@ -12,6 +12,7 @@ import org.example.module.repository.ProductRepository;
 import org.example.module.repository.StorageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -53,6 +54,7 @@ public class InStockService {
      ************* */
 
 
+    @Transactional
     // 입고된 물품 분류 저장하기 => product 및 storage 관한 정보 받기
     public PartDto createStock(ProductDto insertProduct, String storageName) {
         ProductDto productDto = new ProductDto();
@@ -83,6 +85,9 @@ public class InStockService {
             }
         } else return null;
     }
+
     //입고할 productId와 동일한 Id 값을 식별 (나중에 많은 량 입고를 가정할 떄 추가 요망)
+
+
 
 }
