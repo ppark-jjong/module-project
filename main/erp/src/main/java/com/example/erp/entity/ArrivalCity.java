@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,8 +21,8 @@ public class ArrivalCity {
     private String city;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "arrivalCity")
-    private List<Storage> storageList = new ArrayList<Storage>();
+    private List<Storage> storageList;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "arrivalCity")
-    private List<Order> orderList = new ArrayList<Order>();
+    private List<DeliveryInfor> deliveryInforList;
 }

@@ -38,8 +38,8 @@ public class Storage {
 
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "storage")
-    private List<Part> partList = new ArrayList<Part>();
+    private List<Part> partList;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "storage")
-    private List<NewStock> newStockList = new ArrayList<NewStock>();
+    private List<NewStock> newStockList;
 }

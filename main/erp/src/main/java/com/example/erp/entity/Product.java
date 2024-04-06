@@ -1,11 +1,9 @@
 package com.example.erp.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,11 +30,11 @@ public class Product {
 
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
-    private List<Part> productInpartList = new ArrayList<Part>();
+    private List<Part> productInpartList;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
-    private List<Order> productInOrderList = new ArrayList<Order>();
+    private List<DeliveryInfor> productInDeliveryInforList;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
-    private List<NewStock> productInnewStockList = new ArrayList<NewStock>();
+    private List<NewStock> productInnewStockList;
 }

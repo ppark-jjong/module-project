@@ -5,20 +5,18 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.antlr.v4.runtime.misc.NotNull;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "order")
+@Table(name = "delivery_infor")
 @Getter
 @NoArgsConstructor
-public class Order {
+public class DeliveryInfor {
 
     @Builder
-    public Order(Date eta, int count, ArrivalCity arrivalCity, Client client, Product product, @Nullable String remark) {
+    public DeliveryInfor(Date eta, int count, ArrivalCity arrivalCity, Client client, Product product, @Nullable String remark) {
         this.client = client;
         this.product = product;
         this.arrivalCity = arrivalCity;
@@ -28,9 +26,9 @@ public class Order {
     }
 
     @Id
-    @Column(name = "order_id")
+    @Column(name = "delivery_infor_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long orderId;
+    private long deliveryInforId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
@@ -57,6 +55,6 @@ public class Order {
     private String remark;
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
-    private List<Shipment> shipmentList = new ArrayList<Shipment>();
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "deliveryInfor")
+    private List<Shipment> shipmentList;
 }

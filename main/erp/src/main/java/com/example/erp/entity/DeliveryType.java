@@ -33,5 +33,5 @@ public class DeliveryType {
 
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "deliveryType")
-    private List<Shipment> shipmentList = new ArrayList<Shipment>();
+    private List<Shipment> shipmentList;
 }

@@ -33,5 +33,5 @@ public class Section {
 
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "section")
-    private List<Part> partList = new ArrayList<Part>();
+    private List<Part> partList;
 }

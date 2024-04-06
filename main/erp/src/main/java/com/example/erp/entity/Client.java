@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -43,6 +42,6 @@ public class Client {
 
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
-    private List<Order> orderList;
+    private List<DeliveryInfor> deliveryInforList;
 
 }
