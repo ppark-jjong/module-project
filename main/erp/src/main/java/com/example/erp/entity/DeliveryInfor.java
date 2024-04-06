@@ -23,6 +23,7 @@ public class DeliveryInfor {
         this.count = count;
         this.remark = remark;
         this.eta = eta;
+
     }
 
     @Id
@@ -33,7 +34,6 @@ public class DeliveryInfor {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private Client client;
-
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
