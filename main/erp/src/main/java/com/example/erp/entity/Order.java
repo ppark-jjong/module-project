@@ -18,13 +18,13 @@ import java.util.List;
 public class Order {
 
     @Builder
-    public Order(Date eta, int count, ArrivalCity arrivalCity, Order order, Product clientId, @Nullable String remark) {
+    public Order(Date eta, int count, ArrivalCity arrivalCity, Client client, Product product, @Nullable String remark) {
+        this.client = client;
+        this.product = product;
+        this.arrivalCity = arrivalCity;
+        this.count = count;
         this.remark = remark;
         this.eta = eta;
-        this.count = count;
-        this.arrivalCity = arrivalCity;
-        this.order = order;
-        this.clientId = clientId;
     }
 
     @Id
@@ -32,15 +32,17 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long orderId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
-    private Product clientId;
+    private Client client;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id")
-    private Order order;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "arrival_city_id")
     private ArrivalCity arrivalCity;
 
@@ -56,5 +58,5 @@ public class Order {
 
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
-    private List<Shipment> ShipmentList = new ArrayList<Shipment>();
+    private List<Shipment> shipmentList = new ArrayList<Shipment>();
 }

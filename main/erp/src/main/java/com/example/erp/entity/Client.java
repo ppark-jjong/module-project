@@ -42,7 +42,7 @@ public class Client {
     private int type;
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "clientId")
-    private List<Order> orderList = new ArrayList<Order>();
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")
+    private List<Order> orderList;
 
 }

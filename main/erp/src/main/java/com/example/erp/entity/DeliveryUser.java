@@ -40,5 +40,5 @@ public class DeliveryUser {
     private String vehicleType;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "deliveryUser")
-    private List<DeliveryType> deliveryTypeList = new ArrayList<DeliveryType>();
+    private List<DeliveryType> deliveryTypeList = new ArrayList<>();
 }
