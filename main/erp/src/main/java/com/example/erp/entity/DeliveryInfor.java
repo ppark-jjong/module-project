@@ -16,7 +16,7 @@ import java.util.List;
 public class DeliveryInfor {
 
     @Builder
-    public DeliveryInfor(Date eta, int count, ArrivalCity arrivalCity, Client client, Product product, @Nullable String remark) {
+    public DeliveryInfor(Date eta, int count, ArrivalCity arrivalCity, Client client, Product product, String remark) {
         this.client = client;
         this.product = product;
         this.arrivalCity = arrivalCity;
