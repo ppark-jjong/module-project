@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class DeliveryType {
 
-    public DeliveryType(Section deliveryUser, String deliveryType) {
+    public DeliveryType(DeliveryUser deliveryUser, String deliveryType) {
         this.deliveryUser = deliveryUser;
         this.deliveryType = deliveryType;
     }
@@ -24,14 +24,14 @@ public class DeliveryType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long deliveryTypeId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "delivery_user_id")
-    private Section deliveryUser;
+    private DeliveryUser deliveryUser;
 
     @Column(name = "delivery_type")
     private String deliveryType;
 
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "deliveryType")
-    private List<Shipment> ShipmentList = new ArrayList<Shipment>();
+    private List<Shipment> shipmentList = new ArrayList<Shipment>();
 }

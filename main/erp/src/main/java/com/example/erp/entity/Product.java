@@ -32,11 +32,11 @@ public class Product {
 
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
-    private List<Part> partList = new ArrayList<Part>();
+    private List<Part> productInpartList = new ArrayList<Part>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
-    private List<Order> orderList = new ArrayList<Order>();
+    private List<Order> productInOrderList = new ArrayList<Order>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
-    private List<NewStock> newStockList = new ArrayList<NewStock>();
+    private List<NewStock> productInnewStockList = new ArrayList<NewStock>();
 }
