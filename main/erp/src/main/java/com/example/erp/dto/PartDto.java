@@ -1,6 +1,10 @@
 package com.example.erp.dto;
 
 
+import com.example.erp.entity.Part;
+import com.example.erp.entity.Product;
+import com.example.erp.entity.Section;
+import com.example.erp.entity.Storage;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,23 +18,20 @@ import java.util.Date;
 @AllArgsConstructor
 public class PartDto {
     private long partId;
-    private long storageId;
     private long sectionId;
     private long productId;
     private Date startStock;
 
-<<<<<<< HEAD
+
     public void toDto(Part part) {
-        this.id = part.getPartId();
-        this.storageId = part.getStorage().getStorageId();
+        this.partId = part.getPartId();
         this.sectionId = part.getSection().getSectionId();
         this.productId = part.getProduct().getProductId();
         this.startStock = part.getStartStock();
     }
 
-    public Part toEntity(Storage storage, Section section, Product product) {
+    public Part toEntity(Section section, Product product) {
         return Part.builder()
-                .storage(storage)
                 .section(section)
                 .product(product)
                 .startStock(startStock).build();
