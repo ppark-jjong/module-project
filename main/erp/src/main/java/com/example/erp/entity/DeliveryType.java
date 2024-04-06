@@ -24,7 +24,7 @@ public class DeliveryType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long deliveryTypeId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "delivery_user_id")
     private DeliveryUser deliveryUser;
 

@@ -1,20 +1,21 @@
 package com.example.erp.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Entity
 @Table(name = "product")
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Product {
-
-    public Product(float size, float price) {
+    @Builder
+    public Product(float size, float price, String name) {
         this.size = size;
         this.price = price;
+        this.name = name;
     }
 
     @Id
@@ -27,6 +28,9 @@ public class Product {
 
     @Column(name = "price")
     private float price;
+
+    @Column(name = "name")
+    private String name;
 
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")

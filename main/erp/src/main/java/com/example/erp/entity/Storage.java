@@ -32,7 +32,7 @@ public class Storage {
     @Column(name = "current_capacity")
     private double currentCapacity;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "arrival_city_id")
     private ArrivalCity arrivalCity;
 

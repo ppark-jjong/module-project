@@ -1,6 +1,7 @@
 package com.example.erp.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +12,10 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class ArrivalCity {
-
+    @Builder
+    public ArrivalCity(String city) {
+        this.city = city;
+    }
     @Id
     @Column(name = "arrival_city_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
