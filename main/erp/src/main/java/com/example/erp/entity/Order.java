@@ -18,13 +18,12 @@ import java.util.List;
 public class Order {
 
     @Builder
-    public Order(Date eta, int count, ArrivalCity arrivalCity, Order order, Product clientId, @Nullable String remark) {
-        this.remark = remark;
-        this.eta = eta;
-        this.count = count;
+    public Order(Product productId, ArrivalCity arrivalCity, int count, Date eta, @Nullable String remark) {
+        this.productId = productId;
         this.arrivalCity = arrivalCity;
-        this.order = order;
-        this.clientId = clientId;
+        this.count = count;
+        this.eta = eta;
+        this.remark = remark;
     }
 
     @Id
@@ -34,11 +33,11 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
-    private Product clientId;
+    private Client clientId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id")
-    private Order order;
+    @JoinColumn(name = "product_id")
+    private Product productId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "arrival_city_id")

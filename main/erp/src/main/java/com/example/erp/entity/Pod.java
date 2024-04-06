@@ -19,7 +19,7 @@ public class Pod {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shipment_id")
-    private Section shipment;
+    private Shipment shipment;
 
     @Column(name = "time")
     private Date time;
