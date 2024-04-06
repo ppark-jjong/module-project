@@ -1,45 +1,26 @@
 package com.example.erp.dto;
 
-import com.example.erp.entity.DeliveryInfor;
-import com.example.erp.entity.NewStock;
-import com.example.erp.entity.Part;
-import com.example.erp.entity.Product;
-import jakarta.persistence.*;
-import lombok.*;
 
-import java.util.List;
+import com.example.erp.entity.Product;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductDto {
-    @Builder
-    public ProductDto(long productId, float size, float price, String name) {
-        this.productId = productId;
-        this.size = size;
-        this.price = price;
-        this.name = name;
-    }
-
-    private long productId;
-
+    private long id;
     private float size;
-
     private float price;
 
-    private String name;
-
-    public void toDto(Product product) {
-        this.productId = product.getProductId();
+    public void toProductDto(Product product) {
+        this.id = product.getProductId();
         this.size = product.getSize();
         this.price = product.getPrice();
-        this.name = product.getName();
-    }
 
-    public Product toEntity() {
-        return Product.builder()
-                .size(this.size)
-                .price(this.price)
-                .name(this.name).build();
     }
 }
 

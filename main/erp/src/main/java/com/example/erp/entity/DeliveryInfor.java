@@ -23,6 +23,7 @@ public class DeliveryInfor {
         this.count = count;
         this.remark = remark;
         this.eta = eta;
+
     }
 
     @Id
@@ -34,8 +35,8 @@ public class DeliveryInfor {
     @JoinColumn(name = "client_id")
     private Client client;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
+
     @JoinColumn(name = "product_id")
     private Product product;
 

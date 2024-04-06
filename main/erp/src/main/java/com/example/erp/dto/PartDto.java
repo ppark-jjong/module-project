@@ -1,32 +1,25 @@
 package com.example.erp.dto;
 
-import com.example.erp.entity.*;
-import lombok.AccessLevel;
-import lombok.Builder;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.security.cert.PKIXParameters;
 import java.util.Date;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class PartDto {
-    @Builder
-    public PartDto(long id, long storageId, long sectionId, long productId, Date startStock) {
-        this.id = id;
-        this.storageId = storageId;
-        this.sectionId = sectionId;
-        this.productId = productId;
-        this.startStock = startStock;
-    }
-
-    private long id;
+    private long partId;
     private long storageId;
     private long sectionId;
     private long productId;
     private Date startStock;
 
+<<<<<<< HEAD
     public void toDto(Part part) {
         this.id = part.getPartId();
         this.storageId = part.getStorage().getStorageId();
@@ -44,3 +37,4 @@ public class PartDto {
     }
 
 }
+

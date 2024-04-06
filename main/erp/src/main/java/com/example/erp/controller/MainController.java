@@ -1,3 +1,8 @@
 package com.example.erp.controller;
 
-public class MainController {}
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class MainController {
+
+}

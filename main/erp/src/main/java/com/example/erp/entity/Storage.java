@@ -36,9 +36,8 @@ public class Storage {
     @JoinColumn(name = "arrival_city_id")
     private ArrivalCity arrivalCity;
 
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "storage")
-    private List<Part> partList;
+    private List<Section> sectionList;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "storage")
     private List<NewStock> newStockList;
