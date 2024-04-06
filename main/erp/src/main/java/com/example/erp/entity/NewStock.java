@@ -1,6 +1,7 @@
 package com.example.erp.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,4 +26,11 @@ public class NewStock {
 
     @Column (name = "count")
     private int count;
+
+    @Builder
+    public NewStock(Storage storage, Product product, int count) {
+        this.storage = storage;
+        this.product = product;
+        this.count = count;
+    }
 }

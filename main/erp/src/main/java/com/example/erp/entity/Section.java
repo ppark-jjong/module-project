@@ -25,6 +25,13 @@ public class Section {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long sectionId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "storage_id")
+    private Storage storage;
+
+    @Column(name = "section_name")
+    private String sectionName;
+
     @Column(name = "capacity")
     private int capacity;
 
