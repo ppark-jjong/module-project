@@ -26,7 +26,7 @@ public class Shipment {
     private DeliveryType deliveryType;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "delivery_infor_id")
     private DeliveryInfor deliveryInfor;
 
     @Column(name = "departures")
