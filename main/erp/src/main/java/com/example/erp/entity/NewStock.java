@@ -13,7 +13,6 @@ import java.util.Date;
 @NoArgsConstructor
 public class NewStock {
 
-
     @Builder
     public NewStock(Storage storage, Product product, int count) {
         this.storage = storage;
@@ -37,10 +36,4 @@ public class NewStock {
     @Column(name = "count")
     private int count;
 
-    @Builder
-    public NewStock(Storage storage, Product product, int count) {
-        this.storage = storage;
-        this.product = product;
-        this.count = count;
-    }
 }

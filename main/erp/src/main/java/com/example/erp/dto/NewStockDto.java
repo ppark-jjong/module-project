@@ -1,6 +1,8 @@
 package com.example.erp.dto;
 
 import com.example.erp.entity.NewStock;
+import com.example.erp.entity.Product;
+import com.example.erp.entity.Storage;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
