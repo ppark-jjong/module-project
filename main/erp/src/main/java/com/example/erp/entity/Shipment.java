@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,7 +27,7 @@ public class Shipment {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")
-    private Order order;
+    private DeliveryInfor deliveryInfor;
 
     @Column(name = "departures")
     private String departures;
@@ -38,5 +37,5 @@ public class Shipment {
 
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "shipment")
-    private List<Pod> podList = new ArrayList<Pod>();
+    private List<Pod> podList;
 }
