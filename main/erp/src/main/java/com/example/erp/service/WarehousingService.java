@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class Warehousing {
+public class WarehousingService {
 
     private final StorageRepository storageRepository;
     private final SectionRepository sectionRepository;
@@ -18,11 +18,11 @@ public class Warehousing {
 
 
     @Autowired
-    public Warehousing(StorageRepository storageRepository,
-                       SectionRepository sectionRepository,
-                       ProductRepository productRepository,
-                       PartRepository partRepository,
-                       NewStockRepository newStockRepository) {
+    public WarehousingService(StorageRepository storageRepository,
+                              SectionRepository sectionRepository,
+                              ProductRepository productRepository,
+                              PartRepository partRepository,
+                              NewStockRepository newStockRepository) {
         this.storageRepository = storageRepository;
         this.sectionRepository = sectionRepository;
         this.productRepository = productRepository;
