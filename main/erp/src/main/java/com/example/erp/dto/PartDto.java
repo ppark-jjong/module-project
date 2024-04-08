@@ -21,6 +21,7 @@ public class PartDto {
     private long sectionId;
     private long productId;
     private Date startStock;
+    private Date endStock;
 
 
     public void toDto(Part part) {
@@ -28,13 +29,16 @@ public class PartDto {
         this.sectionId = part.getSection().getSectionId();
         this.productId = part.getProduct().getProductId();
         this.startStock = part.getStartStock();
+        this.endStock = part.getEndStock();
     }
 
     public Part toEntity(Section section, Product product) {
         return Part.builder()
                 .section(section)
                 .product(product)
-                .startStock(startStock).build();
+                .startStock(startStock)
+                .endStock(endStock)
+                .build();
     }
 
 }
