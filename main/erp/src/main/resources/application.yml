@@ -6,17 +6,21 @@ spring:
     thymeleaf:
       cache: false
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url:  jdbc:mysql://127.0.0.1:3306/erp
-    username: root
-    password: 3284
-
+    url:  jdbc:mysql://erp.cny42waeivln.us-east-1.rds.amazonaws.com:3306/erpDB
+    username: admin
+    password: 123456789
+#
+#    driverClassName: org.h2.Driver
+#    url: jdbc:h2:mem:test
+#    username: sa
+#    password:
   jpa:
     hibernate:
       show-sql: true #우리가 DB crud query
       naming:
        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-      ddl-auto: update
+      ddl-auto: create
     defer-datasource-initialization: true
     open-in-view: false
     show-sql: true

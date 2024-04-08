@@ -13,6 +13,7 @@ import java.util.List;
 @Repository
 @Table(name = "part")
 public interface PartRepository extends JpaRepository<Part, Long> {
-    List<Part> findByStorageIdAndDate(Section section, Date nowdate);
+
+    List<Part> findBySectionAndEndStock(Section section, Date nowdate);
 
 }

@@ -5,15 +5,18 @@ import com.example.erp.entity.Part;
 import com.example.erp.entity.Section;
 import com.example.erp.entity.Storage;
 import com.example.erp.repository.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Service
+@Slf4j
 public class StockService {
 
     private final StorageRepository storageRepository;
@@ -49,7 +52,7 @@ public class StockService {
         } else if (date > 8 && date < 31) {
             return 500 + 1000;
         } else if (date > 30) {
-            return 500 + 2000 ;
+            return 500 + 2000;
         } else {
             return 0;
         }
@@ -78,11 +81,22 @@ public class StockService {
         }
     }
 
-    // 특정 날짜에 특정 스토리지에서 계산해야하는 물품 보관 비용 계산 메서드
+    // 특정 날짜에 특정 스토리지에서 계산해야하는 총 물품 보관 비용 계산 메서드
     public int stockCostCalculationDate(long storageId, String date) throws ParseException {
-        Date nowDate = dateFormat.parse(date);
-        List<Part> partList = partRepository.findByStorageIdAndDate(sectionRepository.
-                findByStorage(storageRepository.findById(storageId)), nowDate);
-        for(int i = 0 ; i < storageId ; i++) {}
+        Date endDate = dateFormat.parse(date);
+        PartDto dto = new PartDto();
+
+        //section을 이용해 요청받은 storage를 찾고 date를 이용해 요청 받은 날짜를 찾는다
+        List<Part> partList = partRepository.findBySectionAndEndStock(sectionRepository.
+                findByStorage(storageRepository.findById(storageId)), endDate);
+        log.info("partList size:" + partList.size());
+
+        int cost = 0;
+        for (int i = 0; i < partList.size(); i++) {
+            Part part = partList.get(0);
+            dto.toDto(part);
+            cost += stockCostCalculation(dto);
+        }
+        return 1;
     }
 }

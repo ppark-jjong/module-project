@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Part {
 
+
     @Builder
     public Part(Section section, Product product, Date startStock, Date endStock) {
         this.section = section;
