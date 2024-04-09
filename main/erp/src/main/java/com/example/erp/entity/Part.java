@@ -13,19 +13,19 @@ import java.util.List;
 @NoArgsConstructor
 public class Part {
 
+
     @Builder
-    public Part(Section section, Product product, Date startStock) {
+    public Part(Section section, Product product, Date startStock, Date endStock) {
         this.section = section;
         this.product = product;
         this.startStock = startStock;
+        this.endStock = endStock;
     }
 
     @Id
     @Column(name = "part_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long partId;
-
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "section_id")
@@ -37,6 +37,9 @@ public class Part {
 
     @Column(name = "start_stock")
     private Date startStock;
+
+    @Column(name = "end_stock")
+    private Date endStock;
 
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "part")
