@@ -1,10 +1,7 @@
 package com.example.erp.service;
 
 import com.example.erp.dto.*;
-import com.example.erp.entity.NewStock;
-import com.example.erp.entity.Product;
-import com.example.erp.entity.Section;
-import com.example.erp.entity.Storage;
+import com.example.erp.entity.*;
 import com.example.erp.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +37,9 @@ public class WarehousingService {
     Date date = new Date();
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
+    // *! 해당 메서드들은 위치해야할 클래스에 배치되지 않은 경우가 다수 있음. 추후 리팩토링 필요할것
+
+
     // 새로운 입고 물품 신청
     @Transactional
     public NewStockDto createNewStock(long storageId, long productId, int count) {
@@ -51,7 +51,6 @@ public class WarehousingService {
 
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("제품 없당"));
-
 
         NewStock newStock = NewStock.builder()
                 .storage(storage)
@@ -76,7 +75,8 @@ public class WarehousingService {
     // part 생성 메서드
     public PartDto inStock(ProductDto productDto, StorageDto storageDto) {
 
-        if (productDto == null) new IllegalArgumentException("no product exist");
+        if (productDto == null) throw new IllegalArgumentException("no product exist");
+        // storage capacity 삭제 후 사용 가능 상태인지만을 나타내는 state 속성 추가를 고려해야할듯
         if (Math.round(storageDto.getCurrentCapacity()) >= storageDto.getCapacity()) throw new IllegalArgumentException("full storage capacity");
 
         int productSize = Math.round(productDto.getSize());
@@ -84,13 +84,18 @@ public class WarehousingService {
 
         // select section by storage && sectionNumber. 추후 분리가 필요할 수도 있음.
         Section section = sectionRepository.findByStorageAndSectionNumber(storageDto.getStorageId(), sectionNum);
+        if (!isSectionCapacityLeft(section)) throw new IllegalArgumentException("full section capacity");
 
-        SectionDto targetSectionDto = SectionDto.toDto(section);
+        Part part = Part.builder()
+                .section(section)
+                .product(ProductDto.toEntity(productDto))
+                .startStock(date)
+                .build();
+
+        PartDto partDto = PartDto.toDto(partRepository.save(part));
 
 
-        // sectionDto의 매개변수 없는 생성자가 protect 범위로 설정됨. setter 주입과 무분별한 객체 생성을 억제하였으나
-        // Entity -> Dto 변환 간에서 객체 생성의 문제가 발생함.
-
+        return partDto;
     }
 
     // product size를 바탕으로 section을 할당해주는 계산 메서드. 가시성을 위해 분리함
@@ -118,5 +123,14 @@ public class WarehousingService {
         }
         return sectionNum;
     }
+
+    // section capacity 계산. 공간이 남을 시 true, 아니면 false 반환
+    // 추후 사용처가 많지 않을 경우 메서드 병합 고려.
+    public boolean isSectionCapacityLeft(Section section) {
+        if (section.getCapacity() > Math.round(section.getCurrentCapacity())) return true;
+        return false;
+    }
+
+    //
 
 }

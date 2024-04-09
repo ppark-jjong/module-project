@@ -2,6 +2,7 @@ package com.example.erp.dto;
 
 import com.example.erp.entity.Product;
 import com.example.erp.entity.Section;
+import com.example.erp.entity.Storage;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,10 +37,14 @@ public class SectionDto {
                 .build();
     }
 
-    public Section toEntity() {
+    public Section toEntity(Storage storage) {
         return Section.builder()
+                .sectionId(sectionId)
+                .storage(storage)
+                .sectionNumber(sectionNumber)
                 .capacity(capacity)
-                .currentCapacity(currentCapacity).build();
+                .currentCapacity(currentCapacity)
+                .build();
     }
 
 
