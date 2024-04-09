@@ -29,8 +29,8 @@ public class Section {
     @JoinColumn(name = "storage_id")
     private Storage storage;
 
-    @Column(name = "section_name")
-    private String sectionName;
+    @Column(name = "section_number")
+    private int sectionNumber;
 
     @Column(name = "capacity")
     private int capacity;
