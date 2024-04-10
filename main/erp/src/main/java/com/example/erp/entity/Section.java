@@ -15,7 +15,10 @@ import java.util.List;
 public class Section {
 
     @Builder
-    public Section(long sectionId, Storage storage, int sectionNumber, int capacity, double currentCapacity) {
+    public Section(long sectionId, Storage storage, int sectionNumber, int capacity, int currentCapacity) {
+        this.sectionId = sectionId;
+        this.storage = storage;
+        this.sectionNumber = sectionNumber;
         this.capacity = capacity;
         this.currentCapacity = currentCapacity;
     }
@@ -36,7 +39,7 @@ public class Section {
     private int capacity;
 
     @Column(name = "current_capacity")
-    private double currentCapacity;
+    private int currentCapacity;
 
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "section")

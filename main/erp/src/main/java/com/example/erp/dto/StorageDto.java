@@ -12,29 +12,32 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class StorageDto {
     @Builder
-    public StorageDto(long storageId, int capacity, double currentCapacity, ArrivalCity arrivalCity) {
+    public StorageDto(long storageId, int state, int capacity, long arrivalCity) {
         this.storageId = storageId;
+        this.state = state;
         this.capacity = capacity;
-        this.currentCapacity = currentCapacity;
         this.arrivalCity = arrivalCity;
     }
 
     private long storageId;
+    private int state;
     private int capacity;
-    private double currentCapacity;
-    private ArrivalCity arrivalCity;
+    private long arrivalCity;
 
-    public void toDto(Storage storage) {
-        this.storageId = storage.getStorageId();
-        this.capacity = storage.getCapacity();
-        this.currentCapacity = storage.getCurrentCapacity();
-        this.arrivalCity = storage.getArrivalCity();
+    public static StorageDto toDto(Storage storage) {
+        return StorageDto.builder()
+                .storageId(storage.getStorageId())
+                .state(storage.getState())
+                .capacity(storage.getCapacity())
+                .arrivalCity(storage.getArrivalCity().getArrivalCityId())
+                .build();
     }
 
-    public Storage toEntity() {
+    public Storage toEntity(ArrivalCity arrivalCity) {
         return Storage.builder()
+                .storageId(storageId)
+                .state(state)
                 .capacity(capacity)
-                .currentCapacity(currentCapacity)
                 .arrivalCity(arrivalCity)
                 .build();
     }

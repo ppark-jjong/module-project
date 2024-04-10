@@ -15,9 +15,10 @@ import java.util.List;
 public class Storage {
 
     @Builder
-    public Storage(int capacity, double currentCapacity, ArrivalCity arrivalCity) {
+    public Storage(long storageId, int state, int capacity, ArrivalCity arrivalCity) {
+        this.storageId = storageId;
+        this.state = state;
         this.capacity = capacity;
-        this.currentCapacity = currentCapacity;
         this.arrivalCity = arrivalCity;
     }
 
@@ -26,11 +27,11 @@ public class Storage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long storageId;
 
+    @Column(name = "state")
+    private int state;
+
     @Column(name = "capacity")
     private int capacity;
-
-    @Column(name = "current_capacity")
-    private double currentCapacity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "arrival_city_id")

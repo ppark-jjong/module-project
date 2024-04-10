@@ -77,7 +77,7 @@ public class WarehousingService {
 
         if (productDto == null) throw new IllegalArgumentException("no product exist");
         // storage capacity 삭제 후 사용 가능 상태인지만을 나타내는 state 속성 추가를 고려해야할듯
-        if (Math.round(storageDto.getCurrentCapacity()) >= storageDto.getCapacity()) throw new IllegalArgumentException("full storage capacity");
+        if (storageDto.getState() == 1) throw new IllegalArgumentException("full storage capacity");
 
         int productSize = Math.round(productDto.getSize());
         int sectionNum = calcSection(productSize);
@@ -93,7 +93,6 @@ public class WarehousingService {
                 .build();
 
         PartDto partDto = PartDto.toDto(partRepository.save(part));
-
 
         return partDto;
     }
@@ -132,5 +131,6 @@ public class WarehousingService {
     }
 
     //
+    public
 
 }

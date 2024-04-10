@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class SectionDto {
 
     @Builder
-    public SectionDto(long sectionId, long storageId, int sectionNumber, int capacity, double currentCapacity) {
+    public SectionDto(long sectionId, long storageId, int sectionNumber, int capacity, int currentCapacity) {
         this.sectionId = sectionId;
         this.storageId = storageId;
         this.sectionNumber = sectionNumber;
@@ -25,7 +25,7 @@ public class SectionDto {
     private long storageId;
     private int sectionNumber;
     private int capacity;
-    private double currentCapacity;
+    private int currentCapacity;
 
     public static SectionDto toDto(Section section) {
         return SectionDto.builder()
