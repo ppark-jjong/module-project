@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -86,9 +87,13 @@ public class StockService {
         Date endDate = dateFormat.parse(date);
         PartDto dto = new PartDto();
 
+        Storage findStorage = storageRepository.findById(storageId)
+                .orElseThrow(() -> new IllegalArgumentException("storage null (stockCostCalculationDate)"));
+
         //section을 이용해 요청받은 storage를 찾고 date를 이용해 요청 받은 날짜를 찾는다
         List<Part> partList = partRepository.findBySectionAndEndStock(sectionRepository.
-                findByStorage(storageRepository.findById(storageId)), endDate);
+                findByStorage(findStorage), endDate);
+
         log.info("partList size:" + partList.size());
 
         int cost = 0;
@@ -99,4 +104,19 @@ public class StockService {
         }
         return 1;
     }
+
+    // 특정 스토리지에 보관되어있는 물품 리스트
+    public List<PartDto> stockPartList(long storageId) {
+        List<Part> entitylist= partRepository.findBySection(
+                sectionRepository.findByStorage(
+                        storageRepository.findById(storageId)
+                                .orElseThrow(() ->
+                                        new IllegalArgumentException("파트에 있는 스토리지를 찾을 수 없습니다 Storage in Part null"))));
+
+        List<PartDto> dtolist = entitylist.stream()
+                .map((Part part) -> PartDto.toDto(part))
+                .collect(Collectors.toList());
+    }
+
+
 }

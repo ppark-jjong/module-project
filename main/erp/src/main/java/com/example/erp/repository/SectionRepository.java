@@ -1,6 +1,5 @@
 package com.example.erp.repository;
 
-import com.example.erp.entity.Client;
 import com.example.erp.entity.Section;
 import com.example.erp.entity.Storage;
 import jakarta.persistence.Table;
@@ -12,5 +11,5 @@ import java.util.Optional;
 @Repository
 @Table(name = "section")
 public interface SectionRepository extends JpaRepository<Section, Long> {
-    Section findByStorage(Optional<Storage> byId);
+    Section findByStorage(Storage storageId);
 }
