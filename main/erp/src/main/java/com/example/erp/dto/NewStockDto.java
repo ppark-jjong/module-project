@@ -10,7 +10,6 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class NewStockDto {
 
     private long stockId;
@@ -26,6 +25,9 @@ public class NewStockDto {
         this.productId = productId;
         this.count = count;
         this.stockDate = stockDate;
+    }
+
+    public NewStockDto(NewStock newStock) {
     }
 
     @Builder

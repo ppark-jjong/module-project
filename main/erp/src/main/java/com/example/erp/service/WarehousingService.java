@@ -127,7 +127,7 @@ public class WarehousingService {
     // section capacity 계산. 공간이 남을 시 true, 아니면 false 반환
     // 추후 사용처가 많지 않을 경우 메서드 병합 고려.
     public boolean isSectionCapacityLeft(Section section) {
-        if (section.getCapacity() > Math.round(section.getCurrentCapacity())) return true;
+        if (section.getCapacity() > section.getCurrentCapacity()) return true;
         return false;
     }
 
