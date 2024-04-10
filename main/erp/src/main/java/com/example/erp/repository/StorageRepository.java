@@ -11,5 +11,6 @@ import java.util.Optional;
 @Repository
 @Table(name = "storage")
 public interface StorageRepository extends JpaRepository<Storage, Long> {
-//    public Optional<Storage> findByArrivalCity(long arrivalCity);
+    //    public Optional<Storage> findByArrivalCity(long arrivalCity);
+    Optional<Storage> findById(Long id);
 }

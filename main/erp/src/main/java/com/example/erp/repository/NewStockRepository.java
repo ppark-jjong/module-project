@@ -12,5 +12,5 @@ import java.util.List;
 @Repository
 @Table(name = "new_stock")
 public interface NewStockRepository extends JpaRepository<NewStock, Long> {
-    public List<NewStock> findAllByStorage(long storageId);
+    List<NewStock> findAllByStorage(Storage storage);
 }

@@ -21,7 +21,7 @@ public class ArrivalCityDto {
 
     public static ArrivalCityDto toDto(ArrivalCity arrivalCity) {
         return ArrivalCityDto.builder()
-                .id(arrivalCity.getId())
+                .id(arrivalCity.getArrivalCityId())
                 .city(arrivalCity.getCity())
                 .build();
     }

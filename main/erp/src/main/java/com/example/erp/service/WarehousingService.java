@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,18 +21,21 @@ public class WarehousingService {
     private final ProductRepository productRepository;
     private final PartRepository partRepository;
     private final NewStockRepository newStockRepository;
+    private final ArrivalCityRepository arrivalCityRepository;
 
     @Autowired
     public WarehousingService(StorageRepository storageRepository,
                               SectionRepository sectionRepository,
                               ProductRepository productRepository,
                               PartRepository partRepository,
-                              NewStockRepository newStockRepository) {
+                              NewStockRepository newStockRepository,
+                              ArrivalCityRepository arrivalCityRepository) {
         this.storageRepository = storageRepository;
         this.sectionRepository = sectionRepository;
         this.productRepository = productRepository;
         this.partRepository = partRepository;
         this.newStockRepository = newStockRepository;
+        this.arrivalCityRepository = arrivalCityRepository;
     }
 
     Date date = new Date();
@@ -46,29 +50,34 @@ public class WarehousingService {
 
         // 반환 Optional 이딴식으로 하면 메서드 종료 후 어딘가에서 반드시 try catch 예외 처리를 받아야 할텐데
         // 이게 맞나
-        Storage storage = storageRepository.findById(storageId)
-                .orElseThrow(() -> new IllegalArgumentException("스토리지 없당"));
+        Optional<Storage> storage = storageRepository.findById(storageId);
+        storage.ifPresent(m -> {
+            throw new IllegalStateException("스토리지가 존재하지 앖습니다.");
+        });
 
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new IllegalArgumentException("제품 없당"));
+
+        Optional<Product> product = productRepository.findById(productId);
+        product.ifPresent(m -> {
+            throw new IllegalStateException("상품이 존재하지 앖습니다.");
+        });
 
         NewStock newStock = NewStock.builder()
-                .storage(storage)
-                .product(product)
+                .storage(storage.get())
+                .product(product.get())
                 .count(count)
                 .stockDate(date)
                 .build();
 
         NewStockDto newStockDto = new NewStockDto();
-        newStockDto.toDto(newStockRepository.save(newStock));
+        NewStockDto.toDto(newStockRepository.save(newStock));
         return newStockDto;
     }
 
     // 파라미터의 스토리지에 금일 보관되는 product 및 개수
     public List<NewStockDto> countInStockInStorage(long storageId) {
-        return newStockRepository.findAllByStorage(storageId).stream()
+        return newStockRepository.findAllByStorage(storageRepository.findById(storageId).get()).stream()
                 .filter(newStock -> newStock.getStockDate() == date)
-                .map(NewStockDto::new)
+                .map(NewStockDto::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -82,8 +91,9 @@ public class WarehousingService {
         int productSize = Math.round(productDto.getSize());
         int sectionNum = calcSection(productSize);
 
+        ArrivalCity arrivalCity;
         // select section by storage && sectionNumber. 추후 분리가 필요할 수도 있음.
-        Section section = sectionRepository.findByStorageAndSectionNumber(storageDto.getStorageId(), sectionNum);
+        Section section = sectionRepository.findByStorageAndSectionNumber(StorageDto.toEntity(storageDto, arrivalCityRepository.findById(storageDto.getArrivalCity()).get()), sectionNum).get();
         if (!isSectionCapacityLeft(section)) throw new IllegalArgumentException("full section capacity");
 
         Part part = Part.builder()
@@ -92,9 +102,7 @@ public class WarehousingService {
                 .startStock(date)
                 .build();
 
-        PartDto partDto = PartDto.toDto(partRepository.save(part));
-
-        return partDto;
+        return PartDto.toDto(partRepository.save(part));
     }
 
     // product size를 바탕으로 section을 할당해주는 계산 메서드. 가시성을 위해 분리함
@@ -115,7 +123,7 @@ public class WarehousingService {
             return sectionNum;
         } else if (productSize > 50 && productSize <= 100) {
             sectionNum = 3;
-        }  else if (productSize > 100 && productSize <= 200) {
+        } else if (productSize > 100 && productSize <= 200) {
             sectionNum = 4;
         } else if (productSize > 200) {
             sectionNum = 5;
@@ -130,8 +138,5 @@ public class WarehousingService {
         if (section.getCapacity() > Math.round(section.getCurrentCapacity())) return true;
         return false;
     }
-
-    //
-    public
 
 }

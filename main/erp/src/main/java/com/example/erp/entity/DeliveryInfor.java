@@ -29,7 +29,7 @@ public class DeliveryInfor {
     @Id
     @Column(name = "delivery_infor_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long deliveryInforId;
+    private Long deliveryInforId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")

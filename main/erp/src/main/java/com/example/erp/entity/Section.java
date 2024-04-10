@@ -26,7 +26,7 @@ public class Section {
     @Id
     @Column(name = "section_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long sectionId;
+    private Long sectionId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "storage_id")
@@ -40,7 +40,6 @@ public class Section {
 
     @Column(name = "current_capacity")
     private int currentCapacity;
-
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "section")
     private List<Part> partList;

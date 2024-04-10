@@ -16,10 +16,11 @@ public class ArrivalCity {
     public ArrivalCity(String city) {
         this.city = city;
     }
+
     @Id
     @Column(name = "arrival_city_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long arrivalCityId;
+    private Long arrivalCityId;
 
     @Column(name = "city")
     private String city;
