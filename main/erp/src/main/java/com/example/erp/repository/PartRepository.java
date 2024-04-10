@@ -16,4 +16,5 @@ public interface PartRepository extends JpaRepository<Part, Long> {
 
     List<Part> findBySectionAndEndStock(Section section, Date nowdate);
 
+    List<Part> findBySection(Section section);
 }
