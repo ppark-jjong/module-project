@@ -3,10 +3,9 @@ package com.example.erp.dto;
 import com.example.erp.entity.NewStock;
 import com.example.erp.entity.Product;
 import com.example.erp.entity.Storage;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.Date;
 
 @Getter
 @Setter
@@ -17,12 +16,18 @@ public class NewStockDto {
     private long storageId;
     private long productId;
     private int count;
+    private Date stockDate;
 
-    public void toNewStockDto(NewStock newStock) {
+    public NewStockDto(NewStock newStock) {
+    }
+
+    @Builder
+    public void toDto(NewStock newStock) {
         this.stockId = newStock.getStockId();
         this.storageId = newStock.getStorage().getStorageId();
         this.productId = newStock.getProduct().getProductId();
         this.count = newStock.getCount();
+        this.stockDate = newStock.getStockDate();
     }
 
 
@@ -31,6 +36,7 @@ public class NewStockDto {
                 .storage(storage)
                 .product(product)
                 .count(count)
+                .stockDate(stockDate)
                 .build();
     }
 }

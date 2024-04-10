@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PartDto {
     @Builder
     public PartDto(long partId, long sectionId, long productId, Date startStock, Date endStock) {
@@ -27,12 +27,14 @@ public class PartDto {
     private Date startStock;
     private Date endStock;
 
-
-    public PartDto toDto(Part part) {
-        this.sectionId = part.getSection().getSectionId();
-        this.productId = part.getProduct().getProductId();
-        this.startStock = part.getStartStock();
-        this.endStock = part.getEndStock();
+    public static PartDto toDto(Part part) {
+        return PartDto.builder()
+                .partId(part.getPartId())
+                .sectionId(part.getSection().getSectionId())
+                .productId(part.getProduct().getProductId())
+                .startStock(part.getStartStock())
+                .endStock(part.getEndStock())
+                .build();
     }
 
     public Part toEntity(Section section, Product product) {

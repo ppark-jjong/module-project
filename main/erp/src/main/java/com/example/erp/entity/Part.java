@@ -15,7 +15,8 @@ public class Part {
 
 
     @Builder
-    public Part(Section section, Product product, Date startStock, Date endStock) {
+    public Part(long partId, Section section, Product product, Date startStock, Date endStock) {
+        this.partId = partId;
         this.section = section;
         this.product = product;
         this.startStock = startStock;
