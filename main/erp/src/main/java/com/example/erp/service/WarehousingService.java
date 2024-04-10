@@ -121,6 +121,7 @@ public class WarehousingService {
         } else if (productSize > 200) {
             sectionNum = 5;
         }
+
         return sectionNum;
     }
 

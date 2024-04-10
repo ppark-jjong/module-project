@@ -10,8 +10,15 @@ import java.util.Date;
 
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class PartDto {
+    private long partId;
+    private long sectionId;
+    private long productId;
+    private Date startStock;
+    private Date endStock;
+
     @Builder
     public PartDto(long partId, long sectionId, long productId, Date startStock, Date endStock) {
         this.partId = partId;
@@ -21,11 +28,6 @@ public class PartDto {
         this.endStock = endStock;
     }
 
-    private long partId;
-    private long sectionId;
-    private long productId;
-    private Date startStock;
-    private Date endStock;
 
     public static PartDto toDto(Part part) {
         return PartDto.builder()

@@ -19,9 +19,11 @@ public class ArrivalCityDto {
     private long id;
     private String city;
 
-    public void toDto(ArrivalCity arrivalCity) {
-        this.id = arrivalCity.getId();
-        this.city = arrivalCity.getCity();
+    public static ArrivalCityDto toDto(ArrivalCity arrivalCity) {
+        return ArrivalCityDto.builder()
+                .id(arrivalCity.getId())
+                .city(arrivalCity.getCity())
+                .build();
     }
 
     public ArrivalCity toEntity() {

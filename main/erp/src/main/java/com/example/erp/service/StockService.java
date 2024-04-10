@@ -48,6 +48,7 @@ public class StockService {
         int section2 = 1000;
         int section3 = 1200;
 
+
         if (date > 0 && date < 8) {
             return 500 + 300;
         } else if (date > 8 && date < 31) {
@@ -85,7 +86,6 @@ public class StockService {
     // 특정 날짜에 특정 스토리지에서 계산해야하는 총 물품 보관 비용 계산 메서드
     public int stockCostCalculationDate(long storageId, String date) throws ParseException {
         Date endDate = dateFormat.parse(date);
-        PartDto dto = new PartDto();
 
         Storage findStorage = storageRepository.findById(storageId)
                 .orElseThrow(() -> new IllegalArgumentException("storage null (stockCostCalculationDate)"));
@@ -99,24 +99,30 @@ public class StockService {
         int cost = 0;
         for (int i = 0; i < partList.size(); i++) {
             Part part = partList.get(0);
-            dto.toDto(part);
-            cost += stockCostCalculation(dto);
+            cost += stockCostCalculation(PartDto.toDto(part));
         }
         return 1;
     }
 
     // 특정 스토리지에 보관되어있는 물품 리스트
     public List<PartDto> stockPartList(long storageId) {
-        List<Part> entitylist= partRepository.findBySection(
+        List<Part> entitylist = partRepository.findBySection(
                 sectionRepository.findByStorage(
                         storageRepository.findById(storageId)
                                 .orElseThrow(() ->
                                         new IllegalArgumentException("파트에 있는 스토리지를 찾을 수 없습니다 Storage in Part null"))));
+//                return  entitylist.stream()
+//                .map((Part part) -> PartDto.toDto(part))
+//                .collect(Collectors.toList());
 
-        List<PartDto> dtolist = entitylist.stream()
-                .map((Part part) -> PartDto.toDto(part))
-                .collect(Collectors.toList());
-
-
+        return entitylist.stream()
+                .map(PartDto::toDto)
+                .toList();
     }
+
+    // 특정 스토리지에 보관되어있는 특정 물품 리스트
+
+    // 특정 물품을 가지고 있는 스토리지 리스트
+
+    //
 }
