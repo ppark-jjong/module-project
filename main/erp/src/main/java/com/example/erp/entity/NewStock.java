@@ -14,10 +14,11 @@ import java.util.Date;
 public class NewStock {
 
     @Builder
-    public NewStock(Storage storage, Product product, int count) {
+    public NewStock(Storage storage, Product product, int count, Date stockDate) {
         this.storage = storage;
         this.product = product;
         this.count = count;
+        this.stockDate = stockDate;
     }
 
     @Id
@@ -35,5 +36,8 @@ public class NewStock {
 
     @Column(name = "count")
     private int count;
+
+    @Column(name = "date")
+    private Date stockDate;
 
 }

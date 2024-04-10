@@ -116,7 +116,7 @@ public class StockService {
         List<PartDto> dtolist = entitylist.stream()
                 .map((Part part) -> PartDto.toDto(part))
                 .collect(Collectors.toList());
+
+
     }
-
-
 }

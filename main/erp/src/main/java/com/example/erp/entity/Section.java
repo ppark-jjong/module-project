@@ -15,7 +15,7 @@ import java.util.List;
 public class Section {
 
     @Builder
-    public Section(int capacity, double currentCapacity) {
+    public Section(long sectionId, Storage storage, int sectionNumber, int capacity, double currentCapacity) {
         this.capacity = capacity;
         this.currentCapacity = currentCapacity;
     }
@@ -29,8 +29,8 @@ public class Section {
     @JoinColumn(name = "storage_id")
     private Storage storage;
 
-    @Column(name = "section_name")
-    private String sectionName;
+    @Column(name = "section_number")
+    private int sectionNumber;
 
     @Column(name = "capacity")
     private int capacity;
