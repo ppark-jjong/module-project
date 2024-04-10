@@ -3,10 +3,7 @@ package com.example.erp.dto;
 import com.example.erp.entity.ArrivalCity;
 import com.example.erp.entity.Product;
 import com.example.erp.entity.Storage;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -21,6 +18,7 @@ public class StorageDto {
     }
 
     private long storageId;
+    @Setter
     private int state;
     private int capacity;
     private long arrivalCity;

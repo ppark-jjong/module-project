@@ -14,7 +14,7 @@ import java.util.List;
 public class Client {
 
     @Builder
-    public Client(String password, String name, String tel, String address) {
+    public Client( String password, String name, String tel, String address) {
         this.password = password;
         this.name = name;
         this.tel = tel;
