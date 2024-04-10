@@ -12,22 +12,31 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NewStockDto {
+
     private long stockId;
     private long storageId;
     private long productId;
     private int count;
     private Date stockDate;
 
-    public NewStockDto(NewStock newStock) {
+    @Builder
+    public NewStockDto(long stockId, long storageId, long productId, int count, Date stockDate) {
+        this.stockId = stockId;
+        this.storageId = storageId;
+        this.productId = productId;
+        this.count = count;
+        this.stockDate = stockDate;
     }
 
     @Builder
-    public void toDto(NewStock newStock) {
-        this.stockId = newStock.getStockId();
-        this.storageId = newStock.getStorage().getStorageId();
-        this.productId = newStock.getProduct().getProductId();
-        this.count = newStock.getCount();
-        this.stockDate = newStock.getStockDate();
+    public static NewStockDto toDto(NewStock newStock) {
+        return NewStockDto.builder()
+                .stockId(newStock.getStockId())
+                .storageId(newStock.getStorage().getStorageId())
+                .productId(newStock.getProduct().getProductId())
+                .count(newStock.getCount())
+                .stockDate(newStock.getStockDate())
+                .build();
     }
 
 

@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class StorageDto {
+
     @Builder
     public StorageDto(long storageId, int state, int capacity, long arrivalCity) {
         this.storageId = storageId;
