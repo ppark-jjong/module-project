@@ -28,7 +28,7 @@ public class PartDto {
     private Date endStock;
 
 
-    public void toDto(Part part) {
+    public PartDto toDto(Part part) {
         this.sectionId = part.getSection().getSectionId();
         this.productId = part.getProduct().getProductId();
         this.startStock = part.getStartStock();
