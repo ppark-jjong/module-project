@@ -1,0 +1,8 @@
+.UserIdSubListBox {
+    display: flex;
+    justify-content: center;
+}
+
+.UserIdSubSelectBox {
+    width: 90px;   
+}
