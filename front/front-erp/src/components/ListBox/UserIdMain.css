@@ -1,0 +1,9 @@
+.UserIdListBox {
+    display: flex;
+    justify-content: center;
+}
+
+.UserIdSelectBox {
+    width: 200px;
+    margin-right: 0.1rem;   
+}
