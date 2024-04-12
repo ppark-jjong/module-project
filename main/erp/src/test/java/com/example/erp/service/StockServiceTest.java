@@ -8,17 +8,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @Slf4j
 @DataJpaTest
-@TestPropertySource(locations = "classpath:application-test.yml")
 @Transactional
 public class StockServiceTest {
 
@@ -50,12 +49,12 @@ public class StockServiceTest {
     //날짜별 보관 비용 도출 메서드
     public void sectionSeperating() {
         //given
-        Part part = partRepository.getReferenceById(1L);
+        Optional<Part> part = Optional.ofNullable(partRepository.findById(1).orElse(null));
 
         int cost = 0;
-        Section section = part.getSection();
-        Date start = part.getStartStock();
-        Date end = part.getEndStock();
+        Section section = part.get().getSection();
+        Date start = part.get().getStartStock();
+        Date end = part.get().getEndStock();
 
         //날짜 차이 수 반환
         int date = (int) ((end.getTime() - start.getTime()) / (24 * 60 * 60 * 1000));

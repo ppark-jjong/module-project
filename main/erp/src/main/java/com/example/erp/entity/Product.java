@@ -22,7 +22,7 @@ public class Product {
     @Id
     @Column(name = "product_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long productId;
+    private Long productId;
 
     @Column(name = "size")
     private float size;

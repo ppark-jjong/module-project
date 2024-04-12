@@ -12,9 +12,11 @@ import java.util.Optional;
 @Table(name = "section")
 public interface SectionRepository extends JpaRepository<Section, Long> {
 
-    public Section findByStorageAndSectionNumber (long storageId, int sectionNumber);
-    Section findByStorage(Optional<Storage> byId);
+    Optional<Section> findByStorageAndSectionNumber (Storage storage, int sectionNumber);
 
 
-    Section findByStorage(Storage storageId);
+    Optional<Section> findByStorage(Optional<Storage> byId);
+
+    Optional<Section> findByStorage(Storage storageId);
+
 }

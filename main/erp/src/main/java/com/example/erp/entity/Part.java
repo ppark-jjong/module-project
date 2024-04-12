@@ -26,7 +26,7 @@ public class Part {
     @Id
     @Column(name = "part_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long partId;
+    private Long partId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "section_id")

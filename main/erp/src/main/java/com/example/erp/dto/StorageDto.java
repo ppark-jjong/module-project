@@ -32,11 +32,11 @@ public class StorageDto {
                 .build();
     }
 
-    public Storage toEntity(ArrivalCity arrivalCity) {
+    public static Storage toEntity(StorageDto storageDto, ArrivalCity arrivalCity) {
         return Storage.builder()
-                .storageId(storageId)
-                .state(state)
-                .capacity(capacity)
+                .storageId(storageDto.storageId)
+                .state(storageDto.state)
+                .capacity(storageDto.capacity)
                 .arrivalCity(arrivalCity)
                 .build();
     }

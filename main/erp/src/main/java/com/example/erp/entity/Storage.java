@@ -25,7 +25,7 @@ public class Storage {
     @Id
     @Column(name = "storage_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long storageId;
+    private Long storageId;
 
     @Column(name = "state")
     private int state;

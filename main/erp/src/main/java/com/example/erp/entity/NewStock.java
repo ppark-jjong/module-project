@@ -24,7 +24,7 @@ public class NewStock {
     @Id
     @Column(name = "stock_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long stockId;
+    private Long stockId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "storage_id")

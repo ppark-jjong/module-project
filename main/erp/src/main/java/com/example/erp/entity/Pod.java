@@ -15,7 +15,7 @@ public class Pod {
     @Id
     @Column(name = "pod_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long podId;
+    private Long podId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shipment_id")

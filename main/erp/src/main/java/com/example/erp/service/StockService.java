@@ -92,7 +92,7 @@ public class StockService {
 
         //section을 이용해 요청받은 storage를 찾고 date를 이용해 요청 받은 날짜를 찾는다
         List<Part> partList = partRepository.findBySectionAndEndStock(sectionRepository.
-                findByStorage(findStorage), endDate);
+                findByStorage(findStorage).get(), endDate);
 
         log.info("partList size:" + partList.size());
 
@@ -108,9 +108,7 @@ public class StockService {
     public List<PartDto> stockPartList(long storageId) {
         List<Part> entitylist = partRepository.findBySection(
                 sectionRepository.findByStorage(
-                        storageRepository.findById(storageId)
-                                .orElseThrow(() ->
-                                        new IllegalArgumentException("파트에 있는 스토리지를 찾을 수 없습니다 Storage in Part null"))));
+                        storageRepository.findById(storageId).get()).get());
 //                return  entitylist.stream()
 //                .map((Part part) -> PartDto.toDto(part))
 //                .collect(Collectors.toList());
