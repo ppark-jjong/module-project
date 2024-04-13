@@ -20,7 +20,6 @@ public class ProductDto {
         this.id = product.getProductId();
         this.size = product.getSize();
         this.price = product.getPrice();
-
     }
 }
 
