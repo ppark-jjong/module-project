@@ -14,16 +14,17 @@ import java.util.Date;
 public class NewStock {
 
     @Builder
-    public NewStock(Storage storage, Product product, int count) {
+    public NewStock(Storage storage, Product product, int count, Date stockDate) {
         this.storage = storage;
         this.product = product;
         this.count = count;
+        this.stockDate = stockDate;
     }
 
     @Id
     @Column(name = "stock_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long stockId;
+    private Long stockId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "storage_id")
@@ -35,5 +36,8 @@ public class NewStock {
 
     @Column(name = "count")
     private int count;
+
+    @Column(name = "date")
+    private Date stockDate;
 
 }

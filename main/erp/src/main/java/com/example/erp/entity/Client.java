@@ -14,16 +14,19 @@ import java.util.List;
 public class Client {
 
     @Builder
-    public Client(String password, String name, String tel, String address) {
+
+    public Client(String clientId, String password, String name, String tel, String address, int type) {
+        this.clientId = clientId;
         this.password = password;
         this.name = name;
         this.tel = tel;
         this.address = address;
+        this.type = type;
     }
 
     @Id
     @Column(name = "client_id")
-    private long clientId;
+    private String clientId;
 
     @Column(name = "password")
     private String password;

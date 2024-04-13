@@ -11,17 +11,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ArrivalCityDto {
     @Builder
-    public ArrivalCityDto(long id, String city) {
+    public ArrivalCityDto(Long id, String city) {
         this.id = id;
         this.city = city;
     }
 
-    private long id;
+    private Long id;
     private String city;
 
-    public void toDto(ArrivalCity arrivalCity) {
-        this.id = arrivalCity.getId();
-        this.city = arrivalCity.getCity();
+    public static ArrivalCityDto toDto(ArrivalCity arrivalCity) {
+        return ArrivalCityDto.builder()
+                .id(arrivalCity.getArrivalCityId())
+                .city(arrivalCity.getCity())
+                .build();
     }
 
     public ArrivalCity toEntity() {

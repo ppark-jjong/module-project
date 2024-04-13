@@ -12,7 +12,8 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Product {
     @Builder
-    public Product(float size, float price, String name) {
+    public Product(long productId, float size, float price, String name) {
+        this.productId = productId;
         this.size = size;
         this.price = price;
         this.name = name;
@@ -21,7 +22,7 @@ public class Product {
     @Id
     @Column(name = "product_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long productId;
+    private Long productId;
 
     @Column(name = "size")
     private float size;

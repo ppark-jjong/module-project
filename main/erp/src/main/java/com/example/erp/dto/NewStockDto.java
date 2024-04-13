@@ -3,26 +3,42 @@ package com.example.erp.dto;
 import com.example.erp.entity.NewStock;
 import com.example.erp.entity.Product;
 import com.example.erp.entity.Storage;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.Date;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class NewStockDto {
+
     private long stockId;
     private long storageId;
     private long productId;
     private int count;
+    private Date stockDate;
 
-    public void toNewStockDto(NewStock newStock) {
-        this.stockId = newStock.getStockId();
-        this.storageId = newStock.getStorage().getStorageId();
-        this.productId = newStock.getProduct().getProductId();
-        this.count = newStock.getCount();
+    @Builder
+    public NewStockDto(long stockId, long storageId, long productId, int count, Date stockDate) {
+        this.stockId = stockId;
+        this.storageId = storageId;
+        this.productId = productId;
+        this.count = count;
+        this.stockDate = stockDate;
+    }
+
+    public NewStockDto(NewStock newStock) {
+    }
+
+    @Builder
+    public static NewStockDto toDto(NewStock newStock) {
+        return NewStockDto.builder()
+                .stockId(newStock.getStockId())
+                .storageId(newStock.getStorage().getStorageId())
+                .productId(newStock.getProduct().getProductId())
+                .count(newStock.getCount())
+                .stockDate(newStock.getStockDate())
+                .build();
     }
 
 
@@ -31,6 +47,7 @@ public class NewStockDto {
                 .storage(storage)
                 .product(product)
                 .count(count)
+                .stockDate(stockDate)
                 .build();
     }
 }

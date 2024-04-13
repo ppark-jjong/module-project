@@ -15,7 +15,7 @@ public class Shipment {
     @Id
     @Column(name = "shipment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long shipmentId;
+    private Long shipmentId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "part_id")

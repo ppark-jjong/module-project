@@ -15,7 +15,10 @@ import java.util.List;
 public class Section {
 
     @Builder
-    public Section(int capacity, double currentCapacity) {
+    public Section(long sectionId, Storage storage, int sectionNumber, int capacity, int currentCapacity) {
+        this.sectionId = sectionId;
+        this.storage = storage;
+        this.sectionNumber = sectionNumber;
         this.capacity = capacity;
         this.currentCapacity = currentCapacity;
     }
@@ -23,21 +26,20 @@ public class Section {
     @Id
     @Column(name = "section_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long sectionId;
+    private Long sectionId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "storage_id")
     private Storage storage;
 
-    @Column(name = "section_name")
-    private String sectionName;
+    @Column(name = "section_number")
+    private int sectionNumber;
 
     @Column(name = "capacity")
     private int capacity;
 
     @Column(name = "current_capacity")
-    private double currentCapacity;
-
+    private int currentCapacity;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "section")
     private List<Part> partList;
