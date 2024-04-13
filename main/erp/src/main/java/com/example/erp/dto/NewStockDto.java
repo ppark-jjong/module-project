@@ -27,6 +27,9 @@ public class NewStockDto {
         this.stockDate = stockDate;
     }
 
+    public NewStockDto(NewStock newStock) {
+    }
+
     @Builder
     public static NewStockDto toDto(NewStock newStock) {
         return NewStockDto.builder()

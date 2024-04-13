@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -84,14 +85,12 @@ public class WarehousingService {
     // part 생성 메서드
     public PartDto inStock(ProductDto productDto, StorageDto storageDto) {
 
-        if (productDto == null) throw new IllegalArgumentException("no product exist");
-        // storage capacity 삭제 후 사용 가능 상태인지만을 나타내는 state 속성 추가를 고려해야할듯
+        if (productDto == null) throw new NoSuchElementException("no product exist");
         if (storageDto.getState() == 1) throw new IllegalArgumentException("full storage capacity");
 
         int productSize = Math.round(productDto.getSize());
         int sectionNum = calcSection(productSize);
 
-        ArrivalCity arrivalCity;
         // select section by storage && sectionNumber. 추후 분리가 필요할 수도 있음.
         Section section = sectionRepository.findByStorageAndSectionNumber(StorageDto.toEntity(storageDto, arrivalCityRepository.findById(storageDto.getArrivalCity()).get()), sectionNum).get();
         if (!isSectionCapacityLeft(section)) throw new IllegalArgumentException("full section capacity");
@@ -102,7 +101,11 @@ public class WarehousingService {
                 .startStock(date)
                 .build();
 
-        return PartDto.toDto(partRepository.save(part));
+        PartDto partDto = PartDto.toDto(partRepository.save(part));
+        increaseSectionCapacity(SectionDto.toDto(section));
+
+        return partDto;
+
     }
 
     // product size를 바탕으로 section을 할당해주는 계산 메서드. 가시성을 위해 분리함
@@ -135,8 +138,82 @@ public class WarehousingService {
     // section capacity 계산. 공간이 남을 시 true, 아니면 false 반환
     // 추후 사용처가 많지 않을 경우 메서드 병합 고려.
     public boolean isSectionCapacityLeft(Section section) {
-        if (section.getCapacity() > Math.round(section.getCurrentCapacity())) return true;
+        if (section.getCapacity() > section.getCurrentCapacity()) return true;
         return false;
     }
 
+    // Section이 가득 차있지 않으면 Current Capacity를 +1. 이후 checkChildSection 메서드를 호출함
+    public void increaseSectionCapacity(SectionDto sectionDto) {
+
+        // 변환 과정이 너무 난잡함. 리팩토링 필요할듯
+        // select 메서드가 Dto를 반환함을 전제로 아래 SectionDto의 변환 과정을 살펴볼것.
+        // 1. SectionDto -> Section 변환을 위해 매개변수로 Storage가 필요함.
+        // 2. repository를 통해 StorageDto 탐색
+        // 3. StorageDto -> Storage 변환을 위해 매개변수로 ArrivalCity가 필요함.
+        // 4. repository를 통해 ArrivalCityDto 탐색
+        // 5. ArrivalCityDto -> ArrivalCity 변환
+        // 6. StorageDto.toEntity(ArrivalCity) -> Storage 변환
+        // 7. SectionDto.toEntity(Storage) -> Section 변환
+
+        // Entity 타입을 반환하는 select 메서드를 추가하거나, 변환을 따로 처리할 필요가 있어 보임
+
+        StorageDto storageDto = findStorageById(sectionDto.getStorageId());
+        ArrivalCityDto arrivalCityDto = findArrivalCityById(storageDto.getArrivalCity());
+        Storage storage = storageDto.toEntity(storageDto, arrivalCityDto.toEntity());
+
+        if (!isSectionCapacityLeft(sectionDto.toEntity(storage)))
+            throw new IllegalArgumentException("full section capacity");
+        else {
+            sectionDto.setCurrentCapacity(sectionDto.getCurrentCapacity() + 1);
+            sectionRepository.save(sectionDto.toEntity(storage));
+
+            checkChildSection(storageDto);
+        }
+    }
+
+    // storage의 자식 section의 current capacity를 검사하여 storage의 state 조정
+    // 가득 차면 1, 아니면 0
+    public void checkChildSection(StorageDto storageDto) {
+        int storageState;
+
+        List<Section> sectionList = sectionRepository.findAll()
+                .stream()
+                .filter(section -> section.getStorage().getStorageId() == storageDto.getStorageId())
+                .filter(section -> isSectionCapacityLeft(section))
+                .collect(Collectors.toList());
+
+        if (sectionList.isEmpty()) storageState = 1;
+        else storageState = 0;
+        storageDto.setState(storageState);
+
+        ArrivalCity arrivalCity = findArrivalCityById(storageDto.getArrivalCity()).toEntity();
+        storageRepository.save(storageDto.toEntity(storageDto, arrivalCity));
+    }
+
+
+    // !** select 메서드. 위치하는 클래스가 추후 달라져야할것임. **!
+
+    public ArrivalCityDto findArrivalCityById(long arrivalCityId) {
+        ArrivalCity arrivalCity = arrivalCityRepository.findById(arrivalCityId)
+                .orElseThrow(() -> new IllegalArgumentException("no arrivalCity exist"));
+
+        ArrivalCityDto arrivalCityDto = ArrivalCityDto.toDto(arrivalCity);
+        return arrivalCityDto;
+    }
+
+    public StorageDto findStorageById(long storageId) {
+        Storage storage = storageRepository.findById(storageId)
+                .orElseThrow(() -> new IllegalArgumentException("no storage exist"));
+
+        StorageDto storageDto = StorageDto.toDto(storage);
+        return storageDto;
+    }
+
+    public SectionDto findSectionById(long sectionId) {
+        Section section = sectionRepository.findById(sectionId)
+                .orElseThrow(() -> new IllegalArgumentException("no section exist"));
+
+        SectionDto sectionDto = SectionDto.toDto(section);
+        return sectionDto;
+    }
 }
