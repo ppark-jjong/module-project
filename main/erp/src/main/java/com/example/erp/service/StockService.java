@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+//제품 보관에 관한 서비스 로직
 public class StockService {
 
     private final StorageRepository storageRepository;
@@ -25,7 +26,6 @@ public class StockService {
     private final ProductRepository productRepository;
     private final PartRepository partRepository;
     private final NewStockRepository newStockRepository;
-
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Autowired
@@ -122,6 +122,5 @@ public class StockService {
     // 특정 스토리지에 보관되어있는 특정 물품 리스트
 
     // 특정 물품을 가지고 있는 스토리지 리스트
-
-    //
+    
 }

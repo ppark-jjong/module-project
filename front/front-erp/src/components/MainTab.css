@@ -1,0 +1,34 @@
+.tabContainer {
+    width: 100%;
+  }
+  
+  .tabMenu {
+    display: flex;
+    justify-content: space-around;
+    padding: 0; /* 기본 패딩 제거 */
+    list-style-type: none; /* 목록 기본 스타일 제거 */
+  }
+  
+  .tabMenu li {
+    padding: 6px 10px;
+    cursor: pointer;
+    background-color: white;
+    color: gray;
+    transition: background-color 0.3s, color 0.3s;  
+  }
+  
+  .tabMenu li:hover {
+    border-bottom: 2px solid rgb(61, 61, 61);
+  }
+
+  .tabContent {
+    padding: 1%;
+    color: white;
+    border: 1px solid gray;
+    border-radius: 5px;
+  } 
+
+  .selectedTab {
+    border-bottom: 2px solid rgb(61, 61, 61);
+  }
+  

@@ -1,0 +1,8 @@
+.ProcurementListBox {
+    display: flex;
+    justify-content: center;
+}
+
+.ProcurementSelectBox {
+    width: 150px;   
+}

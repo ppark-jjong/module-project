@@ -11,12 +11,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ArrivalCityDto {
     @Builder
-    public ArrivalCityDto(long id, String city) {
+    public ArrivalCityDto(Long id, String city) {
         this.id = id;
         this.city = city;
     }
 
-    private long id;
+    private Long id;
     private String city;
 
     public static ArrivalCityDto toDto(ArrivalCity arrivalCity) {

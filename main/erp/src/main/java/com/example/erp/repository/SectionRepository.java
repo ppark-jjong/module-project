@@ -14,7 +14,9 @@ public interface SectionRepository extends JpaRepository<Section, Long> {
 
     Optional<Section> findByStorageAndSectionNumber (Storage storage, int sectionNumber);
 
+
     Optional<Section> findByStorage(Optional<Storage> byId);
 
     Optional<Section> findByStorage(Storage storageId);
+
 }

@@ -3,10 +3,7 @@ package com.example.erp.dto;
 import com.example.erp.entity.Product;
 import com.example.erp.entity.Section;
 import com.example.erp.entity.Storage;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -25,6 +22,7 @@ public class SectionDto {
     private long storageId;
     private int sectionNumber;
     private int capacity;
+    @Setter
     private int currentCapacity;
 
     public static SectionDto toDto(Section section) {

@@ -1,0 +1,8 @@
+.factoryListBox {
+    display: flex;
+    justify-content: center;
+}
+
+.FactorySelectBox {
+    width: 150px;   
+}
