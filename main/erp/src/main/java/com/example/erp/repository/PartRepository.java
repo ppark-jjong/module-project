@@ -19,5 +19,5 @@ public interface PartRepository extends JpaRepository<Part, Long> {
 
     List<Part> findBySection(Section section);
 
-    Optional<Part> findById(int a);
+    Optional<Part> findById(Long id);
 }

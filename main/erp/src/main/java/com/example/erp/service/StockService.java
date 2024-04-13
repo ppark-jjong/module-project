@@ -42,7 +42,7 @@ public class StockService {
     }
 
     //날짜별 보관 비용 도출 메서드
-    public int sectionSeperating(int date) {
+    public int sectionSeparating(int date) {
         //각 section별 보관 비용 값
         int section1 = 500;
         int section2 = 1000;
@@ -73,11 +73,11 @@ public class StockService {
 
         //section 크기별 분류
         if (sectionId > 0 && sectionId < 4) {
-            return sectionSeperating(date);
+            return sectionSeparating(date);
         } else if (sectionId > 3 && sectionId < 6) {
-            return sectionSeperating(date);
+            return sectionSeparating(date);
         } else if (sectionId > 5) {
-            return sectionSeperating(date);
+            return sectionSeparating(date);
         } else {
             return 0;
         }
@@ -101,6 +101,7 @@ public class StockService {
             Part part = partList.get(0);
             cost += stockCostCalculation(PartDto.toDto(part));
         }
+
         return 1;
     }
 

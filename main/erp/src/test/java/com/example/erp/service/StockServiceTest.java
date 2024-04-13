@@ -6,8 +6,12 @@ import com.example.erp.repository.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
@@ -17,14 +21,13 @@ import java.util.Optional;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @Slf4j
-@DataJpaTest
-@Transactional
+@SpringBootTest
 public class StockServiceTest {
 
     @MockBean
     private PartRepository partRepository;
 
-    private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public int sectionSeperating(int date) {
         //각 section별 보관 비용 값
@@ -45,11 +48,11 @@ public class StockServiceTest {
     }
 
     @Test
-    @DisplayName("sectionSeperating method")
+    @DisplayName("테스트")
     //날짜별 보관 비용 도출 메서드
     public void sectionSeperating() {
         //given
-        Optional<Part> part = Optional.ofNullable(partRepository.findById(1).orElse(null));
+        Optional<Part> part = partRepository.findById(1L);
 
         int cost = 0;
         Section section = part.get().getSection();
