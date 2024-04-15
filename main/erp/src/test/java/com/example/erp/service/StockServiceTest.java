@@ -5,13 +5,17 @@ import com.example.erp.entity.Section;
 import com.example.erp.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
@@ -23,7 +27,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 
 @Slf4j
 @SpringBootTest
-@Transactional
 public class StockServiceTest {
 
     @Autowired
@@ -72,12 +75,12 @@ public class StockServiceTest {
     }
 
     @Test
-    @DisplayName("sectionSeperating method")
+    @DisplayName("테스트")
     //날짜별 보관 비용 도출 메서드
     public void sectionSeperating() {
         //given
-        Part part = partRepository.findById(1L).orElseThrow(() -> new IllegalArgumentException("no such part"));
 
+        Part part = partRepository.findById(1L).orElseThrow(() -> new IllegalArgumentException("no such part"));
 
         int cost = 0;
         Section section = part.getSection();

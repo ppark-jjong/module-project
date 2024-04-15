@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Table(name = "delivery_type")
 public interface DeliveryTypeRepository extends JpaRepository<DeliveryType, Long> {
+
+
 }
