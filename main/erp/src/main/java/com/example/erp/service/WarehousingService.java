@@ -4,6 +4,7 @@ import com.example.erp.dto.*;
 import com.example.erp.entity.*;
 import com.example.erp.repository.*;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class WarehousingService {
 
     private final StorageRepository storageRepository;
@@ -52,15 +54,12 @@ public class WarehousingService {
         // 반환 Optional 이딴식으로 하면 메서드 종료 후 어딘가에서 반드시 try catch 예외 처리를 받아야 할텐데
         // 이게 맞나
         Optional<Storage> storage = storageRepository.findById(storageId);
-        storage.ifPresent(m -> {
-            throw new IllegalStateException("스토리지가 존재하지 앖습니다.");
-        });
-
+        if(storage.isEmpty())
+            throw new IllegalStateException("no storage exist");
 
         Optional<Product> product = productRepository.findById(productId);
-        product.ifPresent(m -> {
-            throw new IllegalStateException("상품이 존재하지 앖습니다.");
-        });
+        if (product.isEmpty())
+            throw new IllegalStateException("no product exist");
 
         NewStock newStock = NewStock.builder()
                 .storage(storage.get())
@@ -71,6 +70,7 @@ public class WarehousingService {
 
         NewStockDto newStockDto = new NewStockDto();
         NewStockDto.toDto(newStockRepository.save(newStock));
+        log.info("newStock save complete");
         return newStockDto;
     }
 
