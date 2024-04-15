@@ -24,19 +24,22 @@ public class WarehousingService {
     private final NewStockRepository newStockRepository;
     private final ArrivalCityRepository arrivalCityRepository;
 
+
+    private final FindService findService;
     @Autowired
     public WarehousingService(StorageRepository storageRepository,
                               SectionRepository sectionRepository,
                               ProductRepository productRepository,
                               PartRepository partRepository,
                               NewStockRepository newStockRepository,
-                              ArrivalCityRepository arrivalCityRepository) {
+                              ArrivalCityRepository arrivalCityRepository, FindService findService) {
         this.storageRepository = storageRepository;
         this.sectionRepository = sectionRepository;
         this.productRepository = productRepository;
         this.partRepository = partRepository;
         this.newStockRepository = newStockRepository;
         this.arrivalCityRepository = arrivalCityRepository;
+        this.findService = findService;
     }
 
     Date date = new Date();
@@ -142,18 +145,20 @@ public class WarehousingService {
         return false;
     }
 
+
+
     // Section이 가득 차있지 않으면 Current Capacity를 +1. 이후 checkChildSection 메서드를 호출함
     public void increaseSectionCapacity(SectionDto sectionDto) {
-        StorageDto storageDto = findStorageById(sectionDto.getStorageId()); //섹션에 해당하는 스토리지 찾기
+        StorageDto storageDto = findService.findStorageById(sectionDto.getStorageId()); //섹션에 해당하는 스토리지 찾기
 
         //Section capacity가 차있으면 예외처리
         if (!isSectionCapacityLeft(sectionDto.toEntity(storageDto.toEntity(storageDto,
-                findArrivalCityById(storageDto.getArrivalCity()).toEntity()))))
+                findService.findArrivalCityById(storageDto.getArrivalCity()).toEntity()))))
             throw new IllegalArgumentException("full section capacity");
         else {
             sectionDto.setCurrentCapacity(sectionDto.getCurrentCapacity() + 1);
             sectionRepository.save(sectionDto.toEntity(storageDto.toEntity(storageDto,
-                    findArrivalCityById(storageDto.getArrivalCity()).toEntity())));
+                    findService.findArrivalCityById(storageDto.getArrivalCity()).toEntity())));
 
             checkChildSection(storageDto);
         }
@@ -176,34 +181,9 @@ public class WarehousingService {
             storageState = 0;
         storageDto.setState(storageState);
 
-        ArrivalCity arrivalCity = findArrivalCityById(storageDto.getArrivalCity()).toEntity();
+        ArrivalCity arrivalCity = findService.findArrivalCityById(storageDto.getArrivalCity()).toEntity();
         storageRepository.save(storageDto.toEntity(storageDto, arrivalCity));
     }
 
 
-    // !** select 메서드. 위치하는 클래스가 추후 달라져야할것임. **!
-    public ArrivalCityDto findArrivalCityById(long arrivalCityId) {
-        ArrivalCity arrivalCity = arrivalCityRepository.findById(arrivalCityId)
-                .orElseThrow(() -> new IllegalArgumentException("no arrivalCity exist"));
-
-        ArrivalCityDto arrivalCityDto = ArrivalCityDto.toDto(arrivalCity);
-        return arrivalCityDto;
-    }
-
-    public StorageDto findStorageById(long storageId) {
-        Storage storage = storageRepository.findById(storageId)
-                .orElseThrow(() -> new IllegalArgumentException("no storage exist"));
-
-        StorageDto storageDto = StorageDto.toDto(storage);
-        return storageDto;
-    }
-
-    public SectionDto findSectionById(long sectionId) {
-        Section section = sectionRepository.findById(sectionId)
-                .orElseThrow(() -> new IllegalArgumentException("no section exist"));
-
-
-        SectionDto sectionDto = SectionDto.toDto(section);
-        return sectionDto;
-    }
 }

@@ -25,20 +25,17 @@ public class StockService {
     private final SectionRepository sectionRepository;
     private final ProductRepository productRepository;
     private final PartRepository partRepository;
-    private final NewStockRepository newStockRepository;
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Autowired
     public StockService(StorageRepository storageRepository,
                         SectionRepository sectionRepository,
                         ProductRepository productRepository,
-                        PartRepository partRepository,
-                        NewStockRepository newStockRepository) {
+                        PartRepository partRepository) {
         this.storageRepository = storageRepository;
         this.sectionRepository = sectionRepository;
         this.productRepository = productRepository;
         this.partRepository = partRepository;
-        this.newStockRepository = newStockRepository;
     }
 
     //날짜별 보관 비용 도출 메서드
@@ -105,22 +102,4 @@ public class StockService {
         return 1;
     }
 
-    // 특정 스토리지에 보관되어있는 물품 리스트
-    public List<PartDto> stockPartList(long storageId) {
-        List<Part> entitylist = partRepository.findBySection(
-                sectionRepository.findByStorage(
-                        storageRepository.findById(storageId).get()).get());
-//                return  entitylist.stream()
-//                .map((Part part) -> PartDto.toDto(part))
-//                .collect(Collectors.toList());
-
-        return entitylist.stream()
-                .map(PartDto::toDto)
-                .toList();
-    }
-
-    // 특정 스토리지에 보관되어있는 특정 물품 리스트
-
-    // 특정 물품을 가지고 있는 스토리지 리스트
-    
 }
