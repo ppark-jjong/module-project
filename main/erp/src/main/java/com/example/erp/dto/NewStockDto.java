@@ -27,8 +27,7 @@ public class NewStockDto {
         this.stockDate = stockDate;
     }
 
-    public NewStockDto(NewStock newStock) {
-    }
+
 
     @Builder
     public static NewStockDto toDto(NewStock newStock) {
@@ -44,6 +43,7 @@ public class NewStockDto {
 
     public NewStock toEntity(Storage storage, Product product) {
         return NewStock.builder()
+                .stock
                 .storage(storage)
                 .product(product)
                 .count(count)

@@ -9,7 +9,6 @@ import lombok.*;
 import java.util.Date;
 
 @Getter
-@Setter
 //@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor
 public class PartDto {
