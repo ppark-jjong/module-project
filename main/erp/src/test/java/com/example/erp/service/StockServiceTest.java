@@ -3,28 +3,55 @@ package com.example.erp.service;
 import com.example.erp.entity.Part;
 import com.example.erp.entity.Section;
 import com.example.erp.repository.*;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @Slf4j
-@DataJpaTest
+@SpringBootTest
 @Transactional
 public class StockServiceTest {
 
-    @MockBean
+    @Autowired
     private PartRepository partRepository;
 
+    @Autowired
+    private SectionRepository sectionRepository;
+
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+    @Test
+    public void dbTest() {
+        //given
+        List<Section> sectionList = sectionRepository.findAll();
+        if (sectionList.isEmpty()) {log.info("section is empty");}
+        for(Section section : sectionList) {
+            log.info(section.getSectionId().toString());
+        }
+
+        List<Part> partList = partRepository.findAll();
+        if (partList.isEmpty()) {log.info("partList is empty");}
+        for(Part part : partList) {
+            log.info(part.getPartId().toString());
+        }
+
+        Part part = partRepository.findById(1L).orElseThrow(() -> new IllegalArgumentException("no such part"));
+        log.info(part.getPartId().toString());
+    }
 
     public int sectionSeperating(int date) {
         //각 section별 보관 비용 값
@@ -49,12 +76,13 @@ public class StockServiceTest {
     //날짜별 보관 비용 도출 메서드
     public void sectionSeperating() {
         //given
-        Optional<Part> part = Optional.ofNullable(partRepository.findById(1).orElse(null));
+        Part part = partRepository.findById(1L).orElseThrow(() -> new IllegalArgumentException("no such part"));
+
 
         int cost = 0;
-        Section section = part.get().getSection();
-        Date start = part.get().getStartStock();
-        Date end = part.get().getEndStock();
+        Section section = part.getSection();
+        Date start = part.getStartStock();
+        Date end = part.getEndStock();
 
         //날짜 차이 수 반환
         int date = (int) ((end.getTime() - start.getTime()) / (24 * 60 * 60 * 1000));
@@ -62,16 +90,16 @@ public class StockServiceTest {
         //section 크기별 분류
         if (section.getSectionId() > 0 && section.getSectionId() < 4) {
             cost = sectionSeperating(date);
-            print(cost);
+            log.info(String.valueOf(cost));
         } else if (section.getSectionId() > 3 && section.getSectionId() < 6) {
             cost = sectionSeperating(date);
-            print(cost);
+            log.info(String.valueOf(cost));
         } else if (section.getSectionId() > 5) {
             cost = sectionSeperating(date);
-            print(cost);
+            log.info(String.valueOf(cost));
         } else {
             cost = sectionSeperating(date);
-            print(cost);
+            System.out.println(cost);
         }
     }
 
