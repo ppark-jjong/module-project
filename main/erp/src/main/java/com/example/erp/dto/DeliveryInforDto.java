@@ -12,7 +12,7 @@ import java.util.Date;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DeliveryInforDto {
 
-    private Long deliveryInforId;
+    private Long deliveryInForId;
 
     private String clientId;
 
@@ -27,8 +27,8 @@ public class DeliveryInforDto {
     private String remark;
 
     @Builder
-    public DeliveryInforDto(Long deliveryInforId, String clientId, Long productId, Long arrivalCityId, int count, Date eta, String remark) {
-        this.deliveryInforId = deliveryInforId;
+    public DeliveryInforDto(Long deliveryInForId, String clientId, Long productId, Long arrivalCityId, int count, Date eta, String remark) {
+        this.deliveryInForId = deliveryInForId;
         this.clientId = clientId;
         this.productId = productId;
         this.arrivalCityId = arrivalCityId;
@@ -40,7 +40,7 @@ public class DeliveryInforDto {
 
     public static DeliveryInforDto toDto(DeliveryInfor deliveryInfor) {
         return DeliveryInforDto.builder()
-                .deliveryInforId(deliveryInfor.getDeliveryInforId())
+                .deliveryInForId(deliveryInfor.getDeliveryInForId())
                 .clientId(deliveryInfor.getClient().getClientId())
                 .productId(deliveryInfor.getProduct().getProductId())
                 .arrivalCityId(deliveryInfor.getArrivalCity().getArrivalCityId())

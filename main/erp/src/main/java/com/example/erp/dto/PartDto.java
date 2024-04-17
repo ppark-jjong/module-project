@@ -9,8 +9,7 @@ import lombok.*;
 import java.util.Date;
 
 @Getter
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PartDto {
     private long partId;
     private long sectionId;
