@@ -15,7 +15,7 @@ import java.util.List;
 public class Section {
 
     @Builder
-    public Section(long sectionId, Storage storage, int sectionNumber, int capacity, int currentCapacity) {
+    public Section(Long sectionId, Storage storage, int sectionNumber, int capacity, int currentCapacity) {
         this.sectionId = sectionId;
         this.storage = storage;
         this.sectionNumber = sectionNumber;

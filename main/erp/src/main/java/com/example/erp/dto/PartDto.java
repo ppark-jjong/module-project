@@ -11,14 +11,14 @@ import java.util.Date;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PartDto {
-    private long partId;
-    private long sectionId;
-    private long productId;
+    private Long partId;
+    private Long sectionId;
+    private Long productId;
     private Date startStock;
     private Date endStock;
 
     @Builder
-    public PartDto(long partId, long sectionId, long productId, Date startStock, Date endStock) {
+    public PartDto(Long partId, Long sectionId, Long productId, Date startStock, Date endStock) {
         this.partId = partId;
         this.sectionId = sectionId;
         this.productId = productId;
@@ -39,6 +39,7 @@ public class PartDto {
 
     public Part toEntity(Section section, Product product) {
         return Part.builder()
+                .partId(partId)
                 .section(section)
                 .product(product)
                 .startStock(startStock)

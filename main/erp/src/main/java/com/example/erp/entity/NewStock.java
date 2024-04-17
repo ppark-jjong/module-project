@@ -14,7 +14,8 @@ import java.util.Date;
 public class NewStock {
 
     @Builder
-    public NewStock(Storage storage, Product product, int count, Date stockDate) {
+    public NewStock(Long stockId, Storage storage, Product product, int count, Date stockDate) {
+        this.stockId = stockId;
         this.storage = storage;
         this.product = product;
         this.count = count;

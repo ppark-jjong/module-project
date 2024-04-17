@@ -15,7 +15,8 @@ import java.util.List;
 public class DeliveryUser {
 
     @Builder
-    public DeliveryUser(String name, String tel, String vehicleNumber, String vehicleType) {
+    public DeliveryUser(Long deliveryUserId, String name, String tel, String vehicleNumber, String vehicleType) {
+        this.deliveryUserId = deliveryUserId;
         this.name = name;
         this.tel = tel;
         this.vehicleNumber = vehicleNumber;

@@ -10,7 +10,7 @@ import lombok.*;
 public class StorageDto {
 
     @Builder
-    public StorageDto(long storageId, int state, int capacity, long arrivalCity) {
+    public StorageDto(long storageId, int state, int capacity, Long arrivalCity) {
         this.storageId = storageId;
         this.state = state;
         this.capacity = capacity;
@@ -21,7 +21,7 @@ public class StorageDto {
     @Setter
     private int state;
     private int capacity;
-    private long arrivalCity;
+    private Long arrivalCity;
 
     public static StorageDto toDto(Storage storage) {
         return StorageDto.builder()
@@ -32,11 +32,11 @@ public class StorageDto {
                 .build();
     }
 
-    public static Storage toEntity(StorageDto storageDto, ArrivalCity arrivalCity) {
+    public Storage toEntity( ArrivalCity arrivalCity) {
         return Storage.builder()
-                .storageId(storageDto.storageId)
-                .state(storageDto.state)
-                .capacity(storageDto.capacity)
+                .storageId(storageId)
+                .state(state)
+                .capacity(capacity)
                 .arrivalCity(arrivalCity)
                 .build();
     }

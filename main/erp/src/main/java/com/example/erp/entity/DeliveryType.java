@@ -2,6 +2,7 @@ package com.example.erp.entity;
 
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class DeliveryType {
 
+    @Builder
     public DeliveryType(Long deliveryTypeId, DeliveryUser deliveryUser, String deliveryType) {
         this.deliveryTypeId = deliveryTypeId;
         this.deliveryUser = deliveryUser;

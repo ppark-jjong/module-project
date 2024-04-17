@@ -70,7 +70,7 @@ public class WarehousingServiceTest {
         // 반환 Optional 이딴식으로 하면 메서드 종료 후 어딘가에서 반드시 try catch 예외 처리를 받아야 할텐데
         // 이게 맞나
         Optional<Storage> storage = storageRepository.findById(storageId);
-        if(storage.isEmpty())
+        if (storage.isEmpty())
             throw new IllegalStateException("no storage exist");
 
         Optional<Product> product = productRepository.findById(productId);
@@ -87,7 +87,6 @@ public class WarehousingServiceTest {
         NewStockDto newStockDto = NewStockDto.toDto(newStockRepository.save(newStock));
         return newStockDto;
     }
-
 
 
     @Test
@@ -212,8 +211,7 @@ public class WarehousingServiceTest {
         if (sectionList.isEmpty()) {
             storageState = 1;
             log.info("storage state set to 1");
-        }
-        else {
+        } else {
             storageState = 0;
             log.info("storage state set to 0");
         }
@@ -230,23 +228,20 @@ public class WarehousingServiceTest {
         ArrivalCity arrivalCity = arrivalCityRepository.findById(arrivalCityId)
                 .orElseThrow(() -> new IllegalArgumentException("no arrivalCity exist"));
 
-        ArrivalCityDto arrivalCityDto = ArrivalCityDto.toDto(arrivalCity);
-        return arrivalCityDto;
+        return ArrivalCityDto.toDto(arrivalCity);
     }
 
     public StorageDto findStorageById(long storageId) {
         Storage storage = storageRepository.findById(storageId)
                 .orElseThrow(() -> new IllegalArgumentException("no storage exist"));
 
-        StorageDto storageDto = StorageDto.toDto(storage);
-        return storageDto;
+        return StorageDto.toDto(storage);
     }
 
     public SectionDto findSectionById(long sectionId) {
         Section section = sectionRepository.findById(sectionId)
                 .orElseThrow(() -> new IllegalArgumentException("no section exist"));
 
-        SectionDto sectionDto = SectionDto.toDto(section);
-        return sectionDto;
+        return SectionDto.toDto(section);
     }
 }
