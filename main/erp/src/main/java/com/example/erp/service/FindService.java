@@ -48,7 +48,6 @@ public class FindService {
     }
 
     // 저장소 찾기
-    @Autowired
     public StorageDto findStorageById(long storageId) {
         Storage storage = storageRepository.findById(storageId)
                 .orElseThrow(() -> new IllegalArgumentException("no storage exist"));

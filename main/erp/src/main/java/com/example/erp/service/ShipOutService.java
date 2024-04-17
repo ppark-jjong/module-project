@@ -38,10 +38,9 @@ public class ShipOutService {
     //현재날짜 기준 생성된 주문 리스트 출력
 
     //재고 찾기
-    public PartDto check
 
     //
-    public StorageDto findNearStorage() {
-
-    }
+//    public StorageDto findNearStorage() {
+//
+//    }
 }
