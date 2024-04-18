@@ -15,10 +15,11 @@ public class Part {
 
 
     @Builder
-    public Part(long partId, Section section, Product product, Date startStock, Date endStock) {
+    public Part(long partId, Section section, Product product, Storage storage, Date startStock, Date endStock) {
         this.partId = partId;
         this.section = section;
         this.product = product;
+        this.storage = storage;
         this.startStock = startStock;
         this.endStock = endStock;
     }
@@ -36,12 +37,15 @@ public class Part {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "storage_id")
+    private Storage storage;
+
     @Column(name = "start_stock")
     private Date startStock;
 
     @Column(name = "end_stock")
     private Date endStock;
-
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "part")
     private List<Shipment> ShipmentList;

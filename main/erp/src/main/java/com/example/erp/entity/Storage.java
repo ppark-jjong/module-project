@@ -42,4 +42,7 @@ public class Storage {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "storage")
     private List<NewStock> newStockList;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "storage")
+    private List<Part> partList;
 }

@@ -18,6 +18,8 @@ import java.util.stream.Collectors;
 //출고에 관한 서비스
 public class ShipOutService {
 
+    private final StorageRepository storageRepository;
+    private final PartRepository partRepository;
     private ProductRepository productRepository;
     private DeliveryInforRepository deliveryInforRepository;
     private ClientRepository clientRepository;
@@ -26,6 +28,11 @@ public class ShipOutService {
     private ShipmentRepository shipmentRepository;
     private ArrivalCityRepository arrivalCityRepository;
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+    public ShipOutService(StorageRepository storageRepository, PartRepository partRepository) {
+        this.storageRepository = storageRepository;
+        this.partRepository = partRepository;
+    }
 
     //    주문 생성
     public DeliveryInForDto createDeliveryInFor(DeliveryInForDto deliveryInForDto) {
@@ -67,12 +74,16 @@ public class ShipOutService {
         Long arrivalCityId = deliveryInForDto.getArrivalCityId();
         Long currentProductDtoId = deliveryInForDto.getProductId();
 
+        Optional<Storage> currentStorage = storageRepository.
+                findByArrivalCity(arrivalCityRepository.findById(arrivalCityId).get());
+        Optional<Part> currentPart = partRepository.findByProductAndStorage(currentProductDtoId, currentStorage.get().getStorageId());
 
-
-
+        if (currentPart.isPresent()) {
+            return PartDto.toDto(currentPart.get());
+        } else {
+            return null;
+        }
     }
-
-
 
 
     //
