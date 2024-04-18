@@ -7,12 +7,9 @@ import com.example.erp.dto.StorageDto;
 import com.example.erp.service.WarehousingService;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@RestController("/warehousing")
+@RestController()
 public class WarehousingController {
     private final WarehousingService warehousingService;
 
@@ -27,8 +24,9 @@ public class WarehousingController {
     }
 
     @PostMapping("/create/stock")
-    public ResponseEntity<PartDto> createPart(@RequestBody ProductDto productDto, StorageDto storageDto) {
-        PartDto partDto = warehousingService.inStock(productDto, storageDto);
+    public ResponseEntity<PartDto> createPart(@RequestParam long storageId,
+                                              @RequestParam long productId) {
+        PartDto partDto = warehousingService.inStock(storageId, productId);
         return ResponseEntity.ok(partDto);
     }
 

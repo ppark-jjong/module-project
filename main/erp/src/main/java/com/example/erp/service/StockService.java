@@ -99,7 +99,7 @@ public class StockService {
             cost += stockCostCalculation(PartDto.toDto(part));
         }
 
-        return 1;
+        return cost;
     }
 
 }
