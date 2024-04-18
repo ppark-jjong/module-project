@@ -1,13 +1,7 @@
 package com.example.erp.service;
 
-import com.example.erp.dto.ArrivalCityDto;
-import com.example.erp.dto.PartDto;
-import com.example.erp.dto.SectionDto;
-import com.example.erp.dto.StorageDto;
-import com.example.erp.entity.ArrivalCity;
-import com.example.erp.entity.Part;
-import com.example.erp.entity.Section;
-import com.example.erp.entity.Storage;
+import com.example.erp.dto.*;
+import com.example.erp.entity.*;
 import com.example.erp.repository.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,18 +38,17 @@ public class FindService {
         ArrivalCity arrivalCity = arrivalCityRepository.findById(arrivalCityId)
                 .orElseThrow(() -> new IllegalArgumentException("no arrivalCity exist"));
 
-        ArrivalCityDto arrivalCityDto = ArrivalCityDto.toDto(arrivalCity);
-        return arrivalCityDto;
+        return ArrivalCityDto.toDto(arrivalCity);
     }
 
-    // 저장소 찾기
+
+  
     @Autowired
     public StorageDto findStorageById(Long storageId) {
         Storage storage = storageRepository.findById(storageId)
                 .orElseThrow(() -> new IllegalArgumentException("no storage exist"));
 
-        StorageDto storageDto = StorageDto.toDto(storage);
-        return storageDto;
+        return StorageDto.toDto(storage);
     }
 
     // 섹션 찾기
@@ -63,9 +56,15 @@ public class FindService {
         Section section = sectionRepository.findById(sectionId)
                 .orElseThrow(() -> new IllegalArgumentException("no section exist"));
 
+        return SectionDto.toDto(section);
+    }
 
-        SectionDto sectionDto = SectionDto.toDto(section);
-        return sectionDto;
+    // 상품 찾기
+    public ProductDto findProductById(long productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("no product exist"));
+
+        return ProductDto.toDto(product);
     }
 
     // 특정 스토리지에 보관되어있는 물품 리스트 찾기

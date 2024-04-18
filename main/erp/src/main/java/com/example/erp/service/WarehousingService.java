@@ -27,8 +27,8 @@ public class WarehousingService {
     private final NewStockRepository newStockRepository;
     private final ArrivalCityRepository arrivalCityRepository;
 
-
     private final FindService findService;
+
     @Autowired
     public WarehousingService(StorageRepository storageRepository,
                               SectionRepository sectionRepository,
@@ -58,6 +58,7 @@ public class WarehousingService {
         // 반환 Optional 이딴식으로 하면 메서드 종료 후 어딘가에서 반드시 try catch 예외 처리를 받아야 할텐데
         // 이게 맞나
         Optional<Storage> storage = storageRepository.findById(storageId);
+        log.info("storageId = " + storageId);
         if(storage.isEmpty())
             throw new IllegalStateException("no storage exist");
 
@@ -87,7 +88,10 @@ public class WarehousingService {
     }
 
     // part 생성 메서드
-    public PartDto inStock(ProductDto productDto, StorageDto storageDto) {
+    public PartDto inStock(long storageId, long productId) {
+
+        StorageDto storageDto = findService.findStorageById(storageId);
+        ProductDto productDto = findService.findProductById(productId);
 
         if (productDto == null) throw new NoSuchElementException("no product exist");
         if (storageDto.getState() == 1) throw new IllegalArgumentException("full storage capacity");
@@ -142,8 +146,10 @@ public class WarehousingService {
     // section capacity 계산. 공간이 남을 시 true, 아니면 false 반환
     // 추후 사용처가 많지 않을 경우 메서드 병합 고려.
     public boolean isSectionCapacityLeft(Section section) {
-        if (section.getCapacity() > section.getCurrentCapacity()) return true;
-        return false;
+        if (section.getCapacity() >= section.getCurrentCapacity()) {
+            return true;
+        }
+        else return false;
     }
 
 
@@ -183,7 +189,8 @@ public class WarehousingService {
         storageDto.setState(storageState);
 
         ArrivalCity arrivalCity = findService.findArrivalCityById(storageDto.getArrivalCity()).toEntity();
-        storageRepository.save(storageDto.toEntity(storageDto, arrivalCity));
+        Storage storage = StorageDto.toEntity(storageDto, arrivalCity);
+        storageRepository.save(storage);
     }
 
 
