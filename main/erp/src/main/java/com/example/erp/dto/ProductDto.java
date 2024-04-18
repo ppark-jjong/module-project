@@ -23,7 +23,7 @@ public class ProductDto {
         this.name = name;
     }
 
-    public ProductDto toDto(Product product) {
+    public static ProductDto toDto(Product product) {
         return ProductDto.builder()
                 .productId(product.getProductId())
                 .size(product.getSize())
