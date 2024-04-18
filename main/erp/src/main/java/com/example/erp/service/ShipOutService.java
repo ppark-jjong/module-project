@@ -78,11 +78,8 @@ public class ShipOutService {
                 findByArrivalCity(arrivalCityRepository.findById(arrivalCityId).get());
         Optional<Part> currentPart = partRepository.findByProductAndStorage(currentProductDtoId, currentStorage.get().getStorageId());
 
-        if (currentPart.isPresent()) {
-            return PartDto.toDto(currentPart.get());
-        } else {
-            return null;
-        }
+        //백퍼 오류남 스트림 형식 List 접근 메서드 사용 요망
+        return currentPart.map(PartDto::toDto).orElse(null);
     }
 
 
