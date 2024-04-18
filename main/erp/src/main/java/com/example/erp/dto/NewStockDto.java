@@ -41,7 +41,7 @@ public class NewStockDto {
 
     public NewStock toEntity(Storage storage, Product product) {
         return NewStock.builder()
-                .stockid()
+                .stockId(stockId)
                 .storage(storage)
                 .product(product)
                 .count(count)
