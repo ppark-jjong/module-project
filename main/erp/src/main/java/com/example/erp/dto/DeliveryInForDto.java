@@ -37,7 +37,7 @@ public class DeliveryInForDto {
     }
 
 
-    public DeliveryInForDto toDto(DeliveryInfor deliveryInfor) {
+    public static DeliveryInForDto toDto(DeliveryInfor deliveryInfor) {
         return DeliveryInForDto.builder()
                 .deliveryInForId(deliveryInfor.getDeliveryInForId())
                 .clientId(deliveryInfor.getClient().getClientId())

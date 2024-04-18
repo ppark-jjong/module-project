@@ -59,7 +59,7 @@ public class WarehousingService {
         // 이게 맞나
         Optional<Storage> storage = storageRepository.findById(storageId);
         log.info("storageId = " + storageId);
-        if(storage.isEmpty())
+        if (storage.isEmpty())
             throw new IllegalStateException("no storage exist");
 
         Optional<Product> product = productRepository.findById(productId);
@@ -72,11 +72,8 @@ public class WarehousingService {
                 .count(count)
                 .stockDate(date)
                 .build();
-
-        NewStockDto newStockDto = new NewStockDto();
-        NewStockDto.toDto(newStockRepository.save(newStock));
         log.info("newStock save complete");
-        return newStockDto;
+        return NewStockDto.toDto(newStockRepository.save(newStock));
     }
 
     // 파라미터의 스토리지에 금일 보관되는 product 및 개수
@@ -100,12 +97,12 @@ public class WarehousingService {
         int sectionNum = calcSection(productSize);
 
         // select section by storage && sectionNumber. 추후 분리가 필요할 수도 있음.
-        Section section = sectionRepository.findByStorageAndSectionNumber(StorageDto.toEntity(storageDto, arrivalCityRepository.findById(storageDto.getArrivalCity()).get()), sectionNum).get();
+        Section section = sectionRepository.findByStorageAndSectionNumber(storageDto.toEntity(arrivalCityRepository.findById(storageDto.getArrivalCity()).get()), sectionNum).get();
         if (!isSectionCapacityLeft(section)) throw new IllegalArgumentException("full section capacity");
 
         Part part = Part.builder()
                 .section(section)
-                .product(ProductDto.toEntity(productDto))
+                .product(productDto.toEntity())
                 .startStock(date)
                 .build();
 
@@ -148,10 +145,8 @@ public class WarehousingService {
     public boolean isSectionCapacityLeft(Section section) {
         if (section.getCapacity() >= section.getCurrentCapacity()) {
             return true;
-        }
-        else return false;
+        } else return false;
     }
-
 
 
     // Section이 가득 차있지 않으면 Current Capacity를 +1. 이후 checkChildSection 메서드를 호출함
@@ -159,12 +154,12 @@ public class WarehousingService {
         StorageDto storageDto = findService.findStorageById(sectionDto.getStorageId()); //섹션에 해당하는 스토리지 찾기
 
         //Section capacity가 차있으면 예외처리
-        if (!isSectionCapacityLeft(sectionDto.toEntity(storageDto.toEntity(storageDto,
+        if (!isSectionCapacityLeft(sectionDto.toEntity(storageDto.toEntity(
                 findService.findArrivalCityById(storageDto.getArrivalCity()).toEntity()))))
             throw new IllegalArgumentException("full section capacity");
         else {
             sectionDto.setCurrentCapacity(sectionDto.getCurrentCapacity() + 1);
-            sectionRepository.save(sectionDto.toEntity(storageDto.toEntity(storageDto,
+            sectionRepository.save(sectionDto.toEntity(storageDto.toEntity(
                     findService.findArrivalCityById(storageDto.getArrivalCity()).toEntity())));
 
             checkChildSection(storageDto);
@@ -179,8 +174,8 @@ public class WarehousingService {
         List<Section> sectionList = sectionRepository.findAll()
                 .stream()
                 .filter(section -> section.getStorage().getStorageId() == storageDto.getStorageId())
-                .filter(section -> isSectionCapacityLeft(section))
-                .collect(Collectors.toList());
+                .filter(this::isSectionCapacityLeft)
+                .toList();
 
         if (sectionList.isEmpty())
             storageState = 1;
@@ -189,7 +184,7 @@ public class WarehousingService {
         storageDto.setState(storageState);
 
         ArrivalCity arrivalCity = findService.findArrivalCityById(storageDto.getArrivalCity()).toEntity();
-        Storage storage = StorageDto.toEntity(storageDto, arrivalCity);
+        Storage storage = storageDto.toEntity(arrivalCity);
         storageRepository.save(storage);
     }
 

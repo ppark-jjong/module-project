@@ -1,6 +1,6 @@
 package com.example.erp.service;
 
-import com.example.erp.dto.DeliveryInForDto;
+import com.example.erp.dto.*;
 import com.example.erp.entity.*;
 import com.example.erp.repository.*;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -27,34 +28,51 @@ public class ShipOutService {
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     //    주문 생성
-    public DeliveryInForDto createOrder(DeliveryInForDto deliveryInForDto) {
+    public DeliveryInForDto createDeliveryInFor(DeliveryInForDto deliveryInForDto) {
         Optional<Client> client = clientRepository.findByClientId(deliveryInForDto.getClientId());
         Optional<Product> product = productRepository.findById(deliveryInForDto.getProductId());
         Optional<ArrivalCity> arrivalCity =
                 arrivalCityRepository.findById(deliveryInForDto.getArrivalCityId());
 
         if (client.isPresent() && product.isPresent() && arrivalCity.isPresent()) {
-
             DeliveryInfor deliveryInfor =
                     deliveryInForDto.toEntity(client.get(), product.get(), arrivalCity.get());
             deliveryInforRepository.save(deliveryInfor);
 
-            return deliveryInForDto.toDto(deliveryInfor);
+            return DeliveryInForDto.toDto(deliveryInfor);
         }
         return null;
     }
-//    주문 수정 (admin만 가능)
 
 
-    //현재날짜 기준 생성된 주문 리스트 출력
+    //   kd주문 수정 (admin만 가능)
+
+
+    //현재날짜 기준 생성된 주문 리스트 출력 (오늘이 될 수도 있고 다른 날이 될 수도 있다 이건 컨트롤러에서 조정)
     public List<DeliveryInForDto> findInForListInPerDay(Date date) {
-        List<DeliveryInfor> entityList = deliveryInforRepository.findAllByEta(date);
+        if (date == null) {
+            return null;
+        } else {
+            List<DeliveryInfor> entityList = deliveryInforRepository.findAllByEta(date);
 
+            return entityList.stream()
+                    .map(DeliveryInForDto::toDto)
+                    .collect(Collectors.toList());
+
+        }
     }
 
     //재고 찾기
+    public PartDto checkPart(DeliveryInForDto deliveryInForDto) {
+        Long arrivalCityId = deliveryInForDto.getArrivalCityId();
+        Long currentProductDtoId = deliveryInForDto.getProductId();
 
-//    public PartDto check
+
+
+
+    }
+
+
 
 
     //
