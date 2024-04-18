@@ -1,13 +1,10 @@
 package com.example.erp.dto;
 
 import com.example.erp.entity.ArrivalCity;
-import com.example.erp.entity.Product;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
+@Setter(AccessLevel.PUBLIC)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ArrivalCityDto {
 
@@ -29,7 +26,7 @@ public class ArrivalCityDto {
 
     public ArrivalCity toEntity() {
         return ArrivalCity.builder()
-                .id(arrivalCityId)
+                .arrivalCityId(arrivalCityId)
                 .city(city).build();
     }
 }

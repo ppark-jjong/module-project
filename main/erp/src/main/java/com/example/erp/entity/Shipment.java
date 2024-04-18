@@ -1,6 +1,7 @@
 package com.example.erp.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,18 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class Shipment {
+
+    @Builder
+    public Shipment(Long shipmentId, Part part, DeliveryType deliveryType,
+                    DeliveryInfor deliveryInFor, String departures, int state) {
+        this.shipmentId = shipmentId;
+        this.part = part;
+        this.deliveryType = deliveryType;
+        this.deliveryInFor = deliveryInFor;
+        this.departures = departures;
+        this.state = state;
+    }
+
 
     @Id
     @Column(name = "shipment_id")
@@ -28,7 +41,7 @@ public class Shipment {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "delivery_infor_id")
-    private DeliveryInfor deliveryInfor;
+    private DeliveryInfor deliveryInFor;
 
     @Column(name = "departures")
     private String departures;

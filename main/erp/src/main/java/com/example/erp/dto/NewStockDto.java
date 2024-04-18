@@ -7,17 +7,18 @@ import lombok.*;
 
 import java.util.Date;
 @Getter
+@Setter(AccessLevel.PUBLIC)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class NewStockDto {
 
-    private long stockId;
-    private long storageId;
-    private long productId;
+    private Long stockId;
+    private Long storageId;
+    private Long productId;
     private int count;
     private Date stockDate;
 
     @Builder
-    public NewStockDto(long stockId, long storageId, long productId, int count, Date stockDate) {
+    public NewStockDto(Long stockId, Long storageId, Long productId, int count, Date stockDate) {
         this.stockId = stockId;
         this.storageId = storageId;
         this.productId = productId;
@@ -27,7 +28,6 @@ public class NewStockDto {
 
 
 
-    @Builder
     public static NewStockDto toDto(NewStock newStock) {
         return NewStockDto.builder()
                 .stockId(newStock.getStockId())

@@ -13,8 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 public class ArrivalCity {
     @Builder
-    public ArrivalCity(Long id, String city) {
-        this.arrivalCityId = id;
+    public ArrivalCity(Long arrivalCityId, String city) {
+        this.arrivalCityId = arrivalCityId;
         this.city = city;
     }
 

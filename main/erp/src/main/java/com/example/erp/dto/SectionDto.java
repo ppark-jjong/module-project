@@ -10,7 +10,7 @@ import lombok.*;
 public class SectionDto {
 
     @Builder
-    public SectionDto(long sectionId, long storageId, int sectionNumber, int capacity, int currentCapacity) {
+    public SectionDto(Long sectionId, long storageId, int sectionNumber, int capacity, int currentCapacity) {
         this.sectionId = sectionId;
         this.storageId = storageId;
         this.sectionNumber = sectionNumber;
@@ -18,8 +18,8 @@ public class SectionDto {
         this.currentCapacity = currentCapacity;
     }
 
-    private long sectionId;
-    private long storageId;
+    private Long sectionId;
+    private Long storageId;
     private int sectionNumber;
     private int capacity;
     @Setter
