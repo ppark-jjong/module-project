@@ -1,46 +1,44 @@
 package com.example.erp.dto;
 
-import com.example.erp.entity.DeliveryUser;
-import com.example.erp.entity.Part;
-import com.example.erp.entity.Product;
-import com.example.erp.entity.Section;
+import com.example.erp.entity.*;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter(AccessLevel.PUBLIC)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class DeliveryTypeDto {
 
     private Long deliveryTypeId;
 
-    private Long deliveryUser;
+    private Long deliveryUserId;
 
     private String deliveryType;
 
 
     @Builder
-    public DeliveryTypeDto(Long deliveryTypeId, Long deliveryUser, String deliveryType) {
+    public DeliveryTypeDto(Long deliveryTypeId, Long deliveryUserId, String deliveryType) {
         this.deliveryTypeId = deliveryTypeId;
-        this.deliveryUser = deliveryUser;
+        this.deliveryUserId = deliveryUserId;
         this.deliveryType = deliveryType;
     }
 
 
-    public static DeliveryTypeDto toDto(Part part) {
-
+    public static DeliveryTypeDto toDto(DeliveryType deliveryType) {
+        return DeliveryTypeDto.builder()
+                .deliveryTypeId(deliveryType.getDeliveryTypeId())
+                .deliveryUserId(deliveryType.getDeliveryUser().getDeliveryUserId())
+                .deliveryType(deliveryType.getDeliveryType())
+                .build();
     }
 
-    public DeliveryType(Section section, Product product) {
-        return Part.builder()
-                .section(section)
-                .product(product)
-                .startStock(startStock)
-                .endStock(endStock)
+    public DeliveryType toEntity(DeliveryUser deliveryUser) {
+        return DeliveryType.builder()
+                .deliveryTypeId(deliveryTypeId)
+                .deliveryUser(deliveryUser)
+                .deliveryType(deliveryType)
                 .build();
     }
 }

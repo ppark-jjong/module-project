@@ -11,6 +11,7 @@ import java.util.List;
 
 @Service
 @Slf4j
+// JPA Find와 관련된 서비스
 public class FindService {
     private final StorageRepository storageRepository;
     private final SectionRepository sectionRepository;
@@ -40,8 +41,10 @@ public class FindService {
         return ArrivalCityDto.toDto(arrivalCity);
     }
 
-    // 저장소 찾기
-    public StorageDto findStorageById(long storageId) {
+
+  
+    @Autowired
+    public StorageDto findStorageById(Long storageId) {
         Storage storage = storageRepository.findById(storageId)
                 .orElseThrow(() -> new IllegalArgumentException("no storage exist"));
 

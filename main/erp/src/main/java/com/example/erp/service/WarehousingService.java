@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+//입고 절차에 대한 서비스
 public class WarehousingService {
 
     private final StorageRepository storageRepository;
