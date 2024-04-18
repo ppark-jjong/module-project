@@ -10,24 +10,26 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ArrivalCityDto {
+
     @Builder
-    public ArrivalCityDto(Long id, String city) {
-        this.id = id;
+    public ArrivalCityDto(Long arrivalCityId, String city) {
+        this.arrivalCityId = arrivalCityId;
         this.city = city;
     }
 
-    private Long id;
+    private Long arrivalCityId;
     private String city;
 
     public static ArrivalCityDto toDto(ArrivalCity arrivalCity) {
         return ArrivalCityDto.builder()
-                .id(arrivalCity.getArrivalCityId())
+                .arrivalCityId(arrivalCity.getArrivalCityId())
                 .city(arrivalCity.getCity())
                 .build();
     }
 
     public ArrivalCity toEntity() {
         return ArrivalCity.builder()
+                .id(arrivalCityId)
                 .city(city).build();
     }
 }

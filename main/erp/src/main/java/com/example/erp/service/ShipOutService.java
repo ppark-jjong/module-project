@@ -2,6 +2,7 @@ package com.example.erp.service;
 
 import com.example.erp.dto.PartDto;
 import com.example.erp.dto.StorageDto;
+import com.example.erp.entity.DeliveryInfor;
 import com.example.erp.entity.Storage;
 import com.example.erp.repository.*;
 import lombok.extern.slf4j.Slf4j;
@@ -34,13 +35,21 @@ public class ShipOutService {
     }
 
     //주문 생성
+//    public DeliveryInfor createOrder() {
+//
+//    }
 
     //현재날짜 기준 생성된 주문 리스트 출력
 
     //재고 찾기
 
+//    public PartDto check
+
+
     //
 //    public StorageDto findNearStorage() {
 //
 //    }
+
+//}
 }

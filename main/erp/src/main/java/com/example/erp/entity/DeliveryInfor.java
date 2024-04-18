@@ -16,7 +16,8 @@ import java.util.List;
 public class DeliveryInfor {
 
     @Builder
-    public DeliveryInfor(Date eta, int count, ArrivalCity arrivalCity, Client client, Product product, String remark) {
+    public DeliveryInfor(Long deliveryInForId, Date eta, int count, ArrivalCity arrivalCity, Client client, Product product, String remark) {
+        this.deliveryInForId = deliveryInForId;
         this.client = client;
         this.product = product;
         this.arrivalCity = arrivalCity;
@@ -29,7 +30,7 @@ public class DeliveryInfor {
     @Id
     @Column(name = "delivery_infor_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long deliveryInforId;
+    private Long deliveryInForId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")

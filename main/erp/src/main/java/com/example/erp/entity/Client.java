@@ -14,7 +14,6 @@ import java.util.List;
 public class Client {
 
     @Builder
-
     public Client(String clientId, String password, String name, String tel, String address, int type) {
         this.clientId = clientId;
         this.password = password;
