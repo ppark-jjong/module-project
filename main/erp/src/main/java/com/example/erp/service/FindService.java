@@ -40,8 +40,7 @@ public class FindService {
 
         return ArrivalCityDto.toDto(arrivalCity);
     }
-
-    // 저장소 찾기
+    
     public StorageDto findStorageById(Long storageId) {
         Storage storage = storageRepository.findById(storageId)
                 .orElseThrow(() -> new IllegalArgumentException("no storage exist"));
