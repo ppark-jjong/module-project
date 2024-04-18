@@ -25,7 +25,7 @@ public class SectionDto {
     @Setter
     private int currentCapacity;
 
-    public SectionDto toDto(Section section) {
+    public static SectionDto toDto(Section section) {
         return SectionDto.builder()
                 .sectionId(section.getSectionId())
                 .storageId(section.getStorage().getStorageId())

@@ -1,14 +1,12 @@
 package com.example.erp.dto;
 
 import com.example.erp.entity.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
 @Setter
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DeliveryInForDto {
 
