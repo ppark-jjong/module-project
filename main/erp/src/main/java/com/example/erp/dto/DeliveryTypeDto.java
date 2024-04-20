@@ -1,5 +1,4 @@
 package com.example.erp.dto;
-
 import com.example.erp.entity.*;
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,7 +23,6 @@ public class DeliveryTypeDto {
         this.deliveryUserId = deliveryUserId;
         this.deliveryType = deliveryType;
     }
-
 
     public static DeliveryTypeDto toDto(DeliveryType deliveryType) {
         return DeliveryTypeDto.builder()

@@ -19,7 +19,7 @@ public interface PartRepository extends JpaRepository<Part, Long> {
 
     List<Part> findBySection(Section section);
 
-    Optional<Part> findByProductAndStorage(Product product, Storage storage);
+    Optional<Part> findByProductAndStorage(Long partId, Long storageId);
 
     @Query(
             value = "select * from part where storage_id != :storageId",

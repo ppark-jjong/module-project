@@ -16,7 +16,7 @@ public class ProductDto {
     private String name;
 
     @Builder
-    public ProductDto(long productId, float size, float price , String name) {
+    public ProductDto(Long productId, float size, float price , String name) {
         this.productId = productId;
         this.size = size;
         this.price = price;

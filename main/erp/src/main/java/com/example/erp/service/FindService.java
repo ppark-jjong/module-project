@@ -41,9 +41,6 @@ public class FindService {
         return ArrivalCityDto.toDto(arrivalCity);
     }
 
-
-  
-    @Autowired
     public StorageDto findStorageById(Long storageId) {
         Storage storage = storageRepository.findById(storageId)
                 .orElseThrow(() -> new IllegalArgumentException("no storage exist"));

@@ -53,7 +53,7 @@ public class ShipmentDto {
                 .shipmentId(shipmentId)
                 .part(part)
                 .deliveryType(deliveryType)
-                .deliveryInFor(deliveryInFor)
+                .deliveryInfor(deliveryInFor)
                 .departures(departures)
                 .state(state)
                 .build();

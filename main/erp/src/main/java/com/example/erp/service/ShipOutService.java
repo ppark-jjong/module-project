@@ -69,11 +69,30 @@ public class ShipOutService {
         }
     }
 
-//    //재고 파악 메서드 (주문과 일치하는 물품 재고 찾기
+    //재고 파악 메서드 (주문과 일치하는 물품 재고 찾기
 //    public PartDto checkPart(DeliveryInForDto deliveryInForDto) {
 //        Long arrivalCityId = deliveryInForDto.getArrivalCityId();
 //        Long currentProductDtoId = deliveryInForDto.getProductId();
 //
+//
+//
+//
+
+    public PartDto checkPart(DeliveryInForDto deliveryInForDto) {
+        Long arrivalCityId = deliveryInForDto.getArrivalCityId();
+        Long currentProductDtoId = deliveryInForDto.getProductId();
+
+        Optional<Storage> currentStorage = storageRepository.
+                findByArrivalCity(arrivalCityRepository.findById(arrivalCityId).get());
+        Optional<Part> currentPart = partRepository.findByProductAndStorage(currentProductDtoId, currentStorage.get().getStorageId());
+
+        if (currentPart.isPresent()) {
+            return PartDto.toDto(currentPart.get());
+        } else {
+            return null;
+        }
+    }
+
 //        Optional<Storage> currentStorage = storageRepository.
 //                findByArrivalCity(arrivalCityRepository.findById(arrivalCityId).get());
 ////        Optional<Part> currentPart = partRepository
