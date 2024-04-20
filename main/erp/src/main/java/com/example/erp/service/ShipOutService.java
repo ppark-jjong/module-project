@@ -63,14 +63,14 @@ public class ShipOutService {
     }
 
     //재고 찾기
-    public PartDto checkPart(DeliveryInForDto deliveryInForDto) {
-        Long arrivalCityId = deliveryInForDto.getArrivalCityId();
-        Long currentProductDtoId = deliveryInForDto.getProductId();
-
-
-
-
-    }
+//    public PartDto checkPart(DeliveryInForDto deliveryInForDto) {
+//        Long arrivalCityId = deliveryInForDto.getArrivalCityId();
+//        Long currentProductDtoId = deliveryInForDto.getProductId();
+//
+//
+//
+//
+//    }
 
 
 
