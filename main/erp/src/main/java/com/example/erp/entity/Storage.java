@@ -15,7 +15,7 @@ import java.util.List;
 public class Storage {
 
     @Builder
-    public Storage(long storageId, int state, int capacity, ArrivalCity arrivalCity) {
+    public Storage(Long storageId, int state, int capacity, ArrivalCity arrivalCity) {
         this.storageId = storageId;
         this.state = state;
         this.capacity = capacity;

@@ -56,6 +56,6 @@ public class DeliveryInfor {
     private String remark;
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "deliveryInfor")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "deliveryInFor")
     private List<Shipment> shipmentList;
 }

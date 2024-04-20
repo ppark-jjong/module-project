@@ -1,5 +1,6 @@
 package com.example.erp.service;
 
+import com.example.erp.dto.PartDto;
 import com.example.erp.entity.Part;
 import com.example.erp.entity.Section;
 import com.example.erp.repository.*;
@@ -18,6 +19,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -35,20 +37,26 @@ public class StockServiceTest {
     @Autowired
     private SectionRepository sectionRepository;
 
+    @Autowired
+    private StorageRepository storageRepository;
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Test
     public void dbTest() {
         //given
         List<Section> sectionList = sectionRepository.findAll();
-        if (sectionList.isEmpty()) {log.info("section is empty");}
-        for(Section section : sectionList) {
+        if (sectionList.isEmpty()) {
+            log.info("section is empty");
+        }
+        for (Section section : sectionList) {
             log.info(section.getSectionId().toString());
         }
 
         List<Part> partList = partRepository.findAll();
-        if (partList.isEmpty()) {log.info("partList is empty");}
-        for(Part part : partList) {
+        if (partList.isEmpty()) {
+            log.info("partList is empty");
+        }
+        for (Part part : partList) {
             log.info(part.getPartId().toString());
         }
 
@@ -75,7 +83,6 @@ public class StockServiceTest {
     }
 
     @Test
-    @DisplayName("테스트")
     //날짜별 보관 비용 도출 메서드
     public void sectionSeperating() {
         //given
@@ -106,6 +113,19 @@ public class StockServiceTest {
         }
     }
 
-    private void print(int cost) {
+    @Test
+    @DisplayName("테스트 stockPartList")
+    public void stockPartList(Long storageId) {
+        List<Part> entitylist = partRepository.findBySection(
+                sectionRepository.findByStorage(
+                        storageRepository.findById(storageId).get()).get());
+//                return  entitylist.stream()
+//                .map((Part part) -> PartDto.toDto(part))
+//                .collect(Collectors.toList());
+
+        print((OutputStream) entitylist.stream()
+                .map(PartDto::toDto)
+                .toList());
     }
+
 }
