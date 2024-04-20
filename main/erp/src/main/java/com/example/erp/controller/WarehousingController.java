@@ -6,11 +6,13 @@ import com.example.erp.dto.ProductDto;
 import com.example.erp.dto.StorageDto;
 import com.example.erp.service.WarehousingService;
 import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController()
+@RestController("/")
 public class WarehousingController {
+    @Autowired
     private final WarehousingService warehousingService;
 
     public WarehousingController(WarehousingService warehousingService) {

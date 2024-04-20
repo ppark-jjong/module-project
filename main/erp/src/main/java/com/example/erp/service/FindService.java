@@ -34,7 +34,7 @@ public class FindService {
 
 
     // 도시 찾기
-    public ArrivalCityDto findArrivalCityById(long arrivalCityId) {
+    public ArrivalCityDto findArrivalCityById(Long arrivalCityId) {
         ArrivalCity arrivalCity = arrivalCityRepository.findById(arrivalCityId)
                 .orElseThrow(() -> new IllegalArgumentException("no arrivalCity exist"));
 
@@ -52,7 +52,7 @@ public class FindService {
     }
 
     // 섹션 찾기
-    public SectionDto findSectionById(long sectionId) {
+    public SectionDto findSectionById(Long sectionId) {
         Section section = sectionRepository.findById(sectionId)
                 .orElseThrow(() -> new IllegalArgumentException("no section exist"));
 
@@ -60,7 +60,7 @@ public class FindService {
     }
 
     // 상품 찾기
-    public ProductDto findProductById(long productId) {
+    public ProductDto findProductById(Long productId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("no product exist"));
 
@@ -68,7 +68,7 @@ public class FindService {
     }
 
     // 특정 스토리지에 보관되어있는 물품 리스트 찾기
-    public List<PartDto> stockPartList(long storageId) {
+    public List<PartDto> stockPartList(Long storageId) {
         List<Part> entitylist = partRepository.findBySection(
                 sectionRepository.findByStorage(
                         storageRepository.findById(storageId).get()).get());

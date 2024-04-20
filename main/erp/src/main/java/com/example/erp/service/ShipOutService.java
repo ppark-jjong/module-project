@@ -52,10 +52,10 @@ public class ShipOutService {
     }
 
 
-    //   kd주문 수정 (admin만 가능)
+    //   주문 수정 (admin만 가능)
 
 
-    //현재날짜 기준 생성된 주문 리스트 출력 (오늘이 될 수도 있고 다른 날이 될 수도 있다 이건 컨트롤러에서 조정)
+    //현재날짜 기준 생성된 주문 리스트 출력 (오늘이 될 수도 있고 다른 날이 될 수도 있다 이건 컨트롤러에서 조정 (시간 순으로 order by))
     public List<DeliveryInForDto> findInForListInPerDay(Date date) {
         if (date == null) {
             return null;
@@ -69,24 +69,32 @@ public class ShipOutService {
         }
     }
 
-    //재고 찾기
-    public PartDto checkPart(DeliveryInForDto deliveryInForDto) {
-        Long arrivalCityId = deliveryInForDto.getArrivalCityId();
-        Long currentProductDtoId = deliveryInForDto.getProductId();
-
-        Optional<Storage> currentStorage = storageRepository.
-                findByArrivalCity(arrivalCityRepository.findById(arrivalCityId).get());
-        Optional<Part> currentPart = partRepository.findByProductAndStorage(currentProductDtoId, currentStorage.get().getStorageId());
-
-        //백퍼 오류남 스트림 형식 List 접근 메서드 사용 요망
-        return currentPart.map(PartDto::toDto).orElse(null);
-    }
-
-
-    //
-//    public StorageDto findNearStorage() {
+//    //재고 파악 메서드 (주문과 일치하는 물품 재고 찾기
+//    public PartDto checkPart(DeliveryInForDto deliveryInForDto) {
+//        Long arrivalCityId = deliveryInForDto.getArrivalCityId();
+//        Long currentProductDtoId = deliveryInForDto.getProductId();
 //
+//        Optional<Storage> currentStorage = storageRepository.
+//                findByArrivalCity(arrivalCityRepository.findById(arrivalCityId).get());
+////        Optional<Part> currentPart = partRepository
+////                .findByProductAndStorage(currentProductDtoId, currentStorage.get().getStorageId());
+//        if (currentPart.isPresent()) {
+//            return PartDto.toDto(currentPart.get());
+//        } else {
+//            // 조금 더 먼 스토리지에 재고를 파악해야함
+//            // 지역정보를 이용하여 조금 더 근처의 스토리지를 파악하는 메서드 필요
+//            return null;
+//        }
 //    }
 
-//}
+
+//    //먼저 탐색한 스토리지를 제외하고 파트 재고를 파악 후 그 파트가 있는 스토리지를 리턴
+//    public StorageDto findNearStorage(ProductDto productDto, Long storageId) {
+//        // 파라미터로 받은 스토리지를 제외시켜야함(먼저 탐색한 스토리지임)
+//        List<Part> findStorageList = partRepository.findByPartExceptionStorage(storageId);
+//
+//        partRepository.findByProduct()
+//    }
+
+
 }

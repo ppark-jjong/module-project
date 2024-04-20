@@ -1,10 +1,10 @@
 package com.example.erp.repository;
 
-import com.example.erp.entity.Client;
-import com.example.erp.entity.Part;
-import com.example.erp.entity.Section;
+import com.example.erp.entity.*;
 import jakarta.persistence.Table;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -19,5 +19,11 @@ public interface PartRepository extends JpaRepository<Part, Long> {
 
     List<Part> findBySection(Section section);
 
-    Optional<Part> findByProductAndStorage(Long Product, Long Storage);
+    Optional<Part> findByProductAndStorage(Product product, Storage storage);
+
+    @Query(
+            value = "select * from part where storage_id != :storageId",
+            nativeQuery = true)
+    List<Part> findByPartExceptionStorage(@Param(value = "storageId") Long storageId);
+
 }

@@ -35,7 +35,7 @@ public class DeliveryTypeDto {
     }
 
     public DeliveryType toEntity(DeliveryUser deliveryUser) {
-        return DeliveryType.builder()e
+        return DeliveryType.builder()
                 .deliveryTypeId(deliveryTypeId)
                 .deliveryUser(deliveryUser)
                 .deliveryType(deliveryType)
