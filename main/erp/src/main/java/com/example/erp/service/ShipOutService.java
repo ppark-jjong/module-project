@@ -4,7 +4,6 @@ import com.example.erp.dto.*;
 import com.example.erp.entity.*;
 import com.example.erp.repository.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -35,18 +34,18 @@ public class ShipOutService {
     }
 
     //    주문 생성
-    public DeliveryInForDto createDeliveryInFor(DeliveryInForDto deliveryInForDto) {
-        Optional<Client> client = clientRepository.findByClientId(deliveryInForDto.getClientId());
-        Optional<Product> product = productRepository.findById(deliveryInForDto.getProductId());
+    public DeliveryInforDto createDeliveryInfor(DeliveryInforDto deliveryInforDto) {
+        Optional<Client> client = clientRepository.findByClientId(deliveryInforDto.getClientId());
+        Optional<Product> product = productRepository.findById(deliveryInforDto.getProductId());
         Optional<ArrivalCity> arrivalCity =
-                arrivalCityRepository.findById(deliveryInForDto.getArrivalCityId());
+                arrivalCityRepository.findById(deliveryInforDto.getArrivalCityId());
 
         if (client.isPresent() && product.isPresent() && arrivalCity.isPresent()) {
             DeliveryInfor deliveryInfor =
-                    deliveryInForDto.toEntity(client.get(), product.get(), arrivalCity.get());
+                    deliveryInforDto.toEntity(client.get(), product.get(), arrivalCity.get());
             deliveryInforRepository.save(deliveryInfor);
 
-            return DeliveryInForDto.toDto(deliveryInfor);
+            return DeliveryInforDto.toDto(deliveryInfor);
         }
         return null;
     }
@@ -56,35 +55,35 @@ public class ShipOutService {
 
 
     //현재날짜 기준 생성된 주문 리스트 출력 (오늘이 될 수도 있고 다른 날이 될 수도 있다 이건 컨트롤러에서 조정 (시간 순으로 order by))
-    public List<DeliveryInForDto> findInForListInPerDay(Date date) {
+    public List<DeliveryInforDto> findInForListInPerDay(Date date) {
         if (date == null) {
             return null;
         } else {
             List<DeliveryInfor> entityList = deliveryInforRepository.findAllByEta(date);
 
             return entityList.stream()
-                    .map(DeliveryInForDto::toDto)
+                    .map(DeliveryInforDto::toDto)
                     .collect(Collectors.toList());
 
         }
     }
 
     //재고 파악 메서드 (주문과 일치하는 물품 재고 찾기
-//    public PartDto checkPart(DeliveryInForDto deliveryInForDto) {
-//        Long arrivalCityId = deliveryInForDto.getArrivalCityId();
-//        Long currentProductDtoId = deliveryInForDto.getProductId();
+//    public PartDto checkPart(DeliveryInforDto deliveryInforDto) {
+//        Long arrivalCityId = deliveryInforDto.getArrivalCityId();
+//        Long currentProductDtoId = deliveryInforDto.getProductId();
 //
 //
 //
 //
 
-    public PartDto checkPart(DeliveryInForDto deliveryInForDto) {
-        Long arrivalCityId = deliveryInForDto.getArrivalCityId();
-        Long currentProductDtoId = deliveryInForDto.getProductId();
+    public PartDto checkPart(DeliveryInforDto deliveryInforDto) {
+        Long arrivalCityId = deliveryInforDto.getArrivalCityId();
+        Long currentProductDtoId = deliveryInforDto.getProductId();
 
         Optional<Storage> currentStorage = storageRepository.
                 findByArrivalCity(arrivalCityRepository.findById(arrivalCityId).get());
-        Optional<Part> currentPart = partRepository.findByProductAndStorage(currentProductDtoId, currentStorage.get().getStorageId());
+        Optional<Part> currentPart = partRepository.findByProduct_ProductIdAndStorage_StorageId(currentProductDtoId, currentStorage.get().getStorageId());
 
         if (currentPart.isPresent()) {
             return PartDto.toDto(currentPart.get());

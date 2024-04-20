@@ -8,9 +8,9 @@ import java.util.Date;
 @Setter
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class DeliveryInForDto {
+public class DeliveryInforDto {
 
-    private Long deliveryInForId;
+    private Long deliveryInforId;
 
     private String clientId;
 
@@ -25,9 +25,9 @@ public class DeliveryInForDto {
     private String remark;
 
     @Builder
-    public DeliveryInForDto(Long deliveryInForId, String clientId, Long productId,
+    public DeliveryInforDto(Long deliveryInforId, String clientId, Long productId,
                             Long arrivalCityId, int count, Date eta, String remark) {
-        this.deliveryInForId = deliveryInForId;
+        this.deliveryInforId = deliveryInforId;
         this.clientId = clientId;
         this.productId = productId;
         this.arrivalCityId = arrivalCityId;
@@ -37,9 +37,9 @@ public class DeliveryInForDto {
     }
 
 
-    public static DeliveryInForDto toDto(DeliveryInfor deliveryInfor) {
-        return DeliveryInForDto.builder()
-                .deliveryInForId(deliveryInfor.getDeliveryInForId())
+    public static DeliveryInforDto toDto(DeliveryInfor deliveryInfor) {
+        return DeliveryInforDto.builder()
+                .deliveryInforId(deliveryInfor.getDeliveryInforId())
                 .clientId(deliveryInfor.getClient().getClientId())
                 .productId(deliveryInfor.getProduct().getProductId())
                 .arrivalCityId(deliveryInfor.getArrivalCity().getArrivalCityId())
@@ -53,7 +53,7 @@ public class DeliveryInForDto {
     public DeliveryInfor toEntity(Client client, Product product,
                                   ArrivalCity arrivalCity) {
         return DeliveryInfor.builder()
-                .deliveryInForId(deliveryInForId)
+                .deliveryInforId(deliveryInforId)
                 .client(client)
                 .product(product)
                 .arrivalCity(arrivalCity)

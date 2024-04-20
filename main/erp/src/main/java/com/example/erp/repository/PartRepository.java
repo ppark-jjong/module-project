@@ -19,11 +19,11 @@ public interface PartRepository extends JpaRepository<Part, Long> {
 
     List<Part> findBySection(Section section);
 
-    Optional<Part> findByProductAndStorage(Long partId, Long storageId);
+    Optional<Part> findByProduct_ProductIdAndStorage_StorageId(Long partId, Long storageId);
 
     @Query(
             value = "select * from part where storage_id != :storageId",
-            nativeQuery = true)
+    nativeQuery = true)
     List<Part> findByPartExceptionStorage(@Param(value = "storageId") Long storageId);
 
 }
