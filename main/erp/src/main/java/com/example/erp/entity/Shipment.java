@@ -15,11 +15,11 @@ public class Shipment {
 
     @Builder
     public Shipment(Long shipmentId, Part part, DeliveryType deliveryType,
-                    DeliveryInfor deliveryInfor, String departures, int state) {
+                    DeliveryInfor deliveryInFor, String departures, int state) {
         this.shipmentId = shipmentId;
         this.part = part;   
         this.deliveryType = deliveryType;
-        this.deliveryInfor = deliveryInfor;
+        this.deliveryInFor = deliveryInFor;
         this.departures = departures;
         this.state = state;
     }
@@ -40,7 +40,7 @@ public class Shipment {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "delivery_infor_id")
-    private DeliveryInfor deliveryInfor;
+    private DeliveryInfor deliveryInFor;
 
     @Column(name = "departures")
     private String departures;

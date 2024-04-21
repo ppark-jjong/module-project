@@ -21,9 +21,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
@@ -40,6 +42,13 @@ public class StockServiceTest {
     @Autowired
     private StorageRepository storageRepository;
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+    @Autowired
+    public StockServiceTest(PartRepository partRepository, SectionRepository sectionRepository, StorageRepository storageRepository) {
+        this.partRepository = partRepository;
+        this.sectionRepository = sectionRepository;
+        this.storageRepository = storageRepository;
+    }
 
     @Test
     public void dbTest() {
@@ -64,58 +73,11 @@ public class StockServiceTest {
         log.info(part.getPartId().toString());
     }
 
-    public int sectionSeperating(int date) {
-        //각 section별 보관 비용 값
-        int section1 = 500;
-        int section2 = 1000;
-        int section3 = 1200;
-
-
-        if (date > 0 && date < 8) {
-            return 500 + 300;
-        } else if (date > 8 && date < 31) {
-            return 500 + 1000;
-        } else if (date > 30) {
-            return 500 + 2000;
-        } else {
-            return 0;
-        }
-    }
-
-    @Test
-    //날짜별 보관 비용 도출 메서드
-    public void sectionSeperating() {
-        //given
-
-        Part part = partRepository.findById(1L).orElseThrow(() -> new IllegalArgumentException("no such part"));
-
-        int cost = 0;
-        Section section = part.getSection();
-        Date start = part.getStartStock();
-        Date end = part.getEndStock();
-
-        //날짜 차이 수 반환
-        int date = (int) ((end.getTime() - start.getTime()) / (24 * 60 * 60 * 1000));
-
-        //section 크기별 분류
-        if (section.getSectionId() > 0 && section.getSectionId() < 4) {
-            cost = sectionSeperating(date);
-            log.info(String.valueOf(cost));
-        } else if (section.getSectionId() > 3 && section.getSectionId() < 6) {
-            cost = sectionSeperating(date);
-            log.info(String.valueOf(cost));
-        } else if (section.getSectionId() > 5) {
-            cost = sectionSeperating(date);
-            log.info(String.valueOf(cost));
-        } else {
-            cost = sectionSeperating(date);
-            System.out.println(cost);
-        }
-    }
 
     @Test
     @DisplayName("테스트 stockPartList")
-    public void stockPartList(Long storageId) {
+    public void stockPartList() {
+        Long storageId = 1L;
         List<Part> entitylist = partRepository.findBySection(
                 sectionRepository.findByStorage(
                         storageRepository.findById(storageId).get()).get());
@@ -125,7 +87,6 @@ public class StockServiceTest {
 
         print((OutputStream) entitylist.stream()
                 .map(PartDto::toDto)
-                .toList());
+                .collect(Collectors.toList()));
     }
-
 }

@@ -84,13 +84,9 @@ public class ShipOutService {
 
         Optional<Storage> currentStorage = storageRepository.
                 findByArrivalCity(arrivalCityRepository.findById(arrivalCityId).get());
-        Optional<Part> currentPart = partRepository.findByProductAndStorage(currentProductDtoId, currentStorage.get().getStorageId());
+        Optional<Part> currentPart = partRepository.findByProductAndStorage(productRepository.findById(currentProductDtoId).get(), currentStorage.get());
 
-        if (currentPart.isPresent()) {
-            return PartDto.toDto(currentPart.get());
-        } else {
-            return null;
-        }
+        return currentPart.map(PartDto::toDto).orElse(null);
     }
 
 //        Optional<Storage> currentStorage = storageRepository.
