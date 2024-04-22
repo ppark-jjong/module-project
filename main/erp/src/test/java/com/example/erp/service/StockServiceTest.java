@@ -45,48 +45,10 @@ public class StockServiceTest {
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Autowired
-    public StockServiceTest(PartRepository partRepository, SectionRepository sectionRepository, StorageRepository storageRepository) {
+    public StockServiceTest(PartRepository partRepository, SectionRepository sectionRepository,
+            StorageRepository storageRepository) {
         this.partRepository = partRepository;
         this.sectionRepository = sectionRepository;
         this.storageRepository = storageRepository;
-    }
-
-    public void dbTest() {
-        //given
-        List<Section> sectionList = sectionRepository.findAll();
-        if (sectionList.isEmpty()) {
-            log.info("section is empty");
-        }
-        for (Section section : sectionList) {
-            log.info(section.getSectionId().toString());
-        }
-
-        List<Part> partList = partRepository.findAll();
-        if (partList.isEmpty()) {
-            log.info("partList is empty");
-        }
-        for (Part part : partList) {
-            log.info(part.getPartId().toString());
-        }
-
-        Part part = partRepository.findById(1L).orElseThrow(() -> new IllegalArgumentException("no such part"));
-        log.info(part.getPartId().toString());
-    }
-
-
-    @Test
-    @DisplayName("테스트 stockPartList")
-    public void stockPartList() {
-        Long storageId = 1L;
-        List<Part> entitylist = partRepository.findBySection(
-                sectionRepository.findByStorage(
-                        storageRepository.findById(storageId).get()).get());
-//                return  entitylist.stream()
-//                .map((Part part) -> PartDto.toDto(part))
-//                .collect(Collectors.toList());
-        List<PartDto> dtoList = entitylist.stream()
-                .map(PartDto::toDto)
-                .collect(Collectors.toList());
-        System.out.println(dtoList);
     }
 }
