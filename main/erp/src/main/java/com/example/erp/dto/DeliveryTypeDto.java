@@ -16,12 +16,15 @@ public class DeliveryTypeDto {
 
     private String deliveryType;
 
+    private Long arrivalCityId;
+
 
     @Builder
-    public DeliveryTypeDto(Long deliveryTypeId, Long deliveryUserId, String deliveryType) {
+    public DeliveryTypeDto(Long deliveryTypeId, Long deliveryUserId, String deliveryType, Long arrivalCityId) {
         this.deliveryTypeId = deliveryTypeId;
         this.deliveryUserId = deliveryUserId;
         this.deliveryType = deliveryType;
+        this.arrivalCityId = arrivalCityId;
     }
 
     public static DeliveryTypeDto toDto(DeliveryType deliveryType) {
@@ -29,14 +32,16 @@ public class DeliveryTypeDto {
                 .deliveryTypeId(deliveryType.getDeliveryTypeId())
                 .deliveryUserId(deliveryType.getDeliveryUser().getDeliveryUserId())
                 .deliveryType(deliveryType.getDeliveryType())
+                .arrivalCityId(deliveryType.getArrivalCity().getArrivalCityId())
                 .build();
     }
 
-    public DeliveryType toEntity(DeliveryUser deliveryUser) {
+    public DeliveryType toEntity(DeliveryUser deliveryUser, ArrivalCity arrivalCity) {
         return DeliveryType.builder()
                 .deliveryTypeId(deliveryTypeId)
                 .deliveryUser(deliveryUser)
                 .deliveryType(deliveryType)
+                .arrivalCity(arrivalCity)
                 .build();
     }
 }

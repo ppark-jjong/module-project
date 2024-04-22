@@ -22,6 +22,8 @@ public class DeliveryService {
     private String kakao_admin_key;
 
     public int getDistance(String originX, String originY, String destX, String destY ) {
+        int distance = 0;
+
         HttpHeaders httpHeaders = new HttpHeaders();
 
         //Http 서버와 통신 가능한 자바 라이브러리. 응답을 JSON/xml 형식으로 변환 가능
@@ -34,7 +36,7 @@ public class DeliveryService {
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
         // 요청 파라미터 추가
-        // get 방식이므로 Body를 사용하지 않음
+        // get 방식이므로 Body를 사용하지 않을 것임
         // https://apis-navi.kakaomobility.com/v1/directions?origin=###&destination=###
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(URL)
                 .queryParam("origin", originX + "," + originY)
@@ -47,7 +49,7 @@ public class DeliveryService {
         ResponseEntity<String> response = restTemplate.exchange(
                 builder.toUriString(),      // 요청 헤더
                 HttpMethod.GET,             // 요청 방식
-                entity,                     // Request Body
+                entity,                     // http object
                 String.class);              // return object
 
         String responseBody = response.getBody();
@@ -55,9 +57,16 @@ public class DeliveryService {
 
         // Gson 라이브러리 JSON 파싱 객체
         JsonParser jsonParser = new JsonParser();
-        JsonElement element = jsonParser.parse(responseBody);
 
-        return element.getAsJsonObject().get("distance").getAsInt();
+        // JSON 데이터 파싱 과정
+        JsonObject jsonObject = jsonParser.parse(responseBody).getAsJsonObject();
+        JsonArray routesArray = jsonObject.getAsJsonArray("routes");
+        JsonObject firstRoute = routesArray.get(0).getAsJsonObject();
+        JsonObject summaryObject = firstRoute.getAsJsonObject("summary");
+
+        distance = summaryObject.getAsJsonPrimitive("distance").getAsInt();
+
+        return distance;
     }
 }
 
