@@ -4,7 +4,6 @@ import com.example.erp.dto.*;
 import com.example.erp.entity.*;
 import com.example.erp.repository.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -73,10 +72,7 @@ public class ShipOutService {
 //    public PartDto checkPart(DeliveryInForDto deliveryInForDto) {
 //        Long arrivalCityId = deliveryInForDto.getArrivalCityId();
 //        Long currentProductDtoId = deliveryInForDto.getProductId();
-//
-//
-//
-//
+
 
     public PartDto checkPart(DeliveryInForDto deliveryInForDto) {
         Long arrivalCityId = deliveryInForDto.getArrivalCityId();
