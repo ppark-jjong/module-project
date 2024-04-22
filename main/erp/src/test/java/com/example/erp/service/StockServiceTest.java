@@ -20,6 +20,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.OutputStream;
+import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,10 +45,10 @@ public class StockServiceTest {
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Autowired
-    public StockServiceTest(PartRepository partRepository, SectionRepository sectionRepository, StorageRepository storageRepository) {
+    public StockServiceTest(PartRepository partRepository, SectionRepository sectionRepository,
+            StorageRepository storageRepository) {
         this.partRepository = partRepository;
         this.sectionRepository = sectionRepository;
         this.storageRepository = storageRepository;
     }
-
 }

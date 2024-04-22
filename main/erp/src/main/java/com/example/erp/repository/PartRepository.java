@@ -22,7 +22,7 @@ public interface PartRepository extends JpaRepository<Part, Long> {
     Optional<Part> findByProductAndStorage(Product product, Storage storage);
 
     @Query(
-            value = "select * from part where storage_id != :storageId",
+            value = "select * from part where storage_id != :storageId order by stroage_id",
             nativeQuery = true)
     List<Part> findByPartExceptionStorage(@Param(value = "storageId") Long storageId);
 
