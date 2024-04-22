@@ -18,8 +18,9 @@ public interface PartRepository extends JpaRepository<Part, Long> {
     List<Part> findBySectionAndEndStock(Section section, Date nowdate);
 
     List<Part> findBySection(Section section);
-
+    
     Optional<Part> findByProduct_ProductIdAndStorage_StorageId(Long partId, Long storageId);
+    Optional<Part> findByProductAndStorage(Product product, Storage storage);
 
     @Query(
             value = "select * from part where storage_id != :storageId",
