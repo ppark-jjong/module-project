@@ -19,7 +19,7 @@ public class Shipment {
         this.shipmentId = shipmentId;
         this.part = part;   
         this.deliveryType = deliveryType;
-        this.deliveryInfor = deliveryInFor;
+        this.deliveryInFor = deliveryInFor;
         this.departures = departures;
         this.state = state;
     }
