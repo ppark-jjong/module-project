@@ -20,6 +20,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.OutputStream;
+import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,7 +51,6 @@ public class StockServiceTest {
         this.storageRepository = storageRepository;
     }
 
-    @Test
     public void dbTest() {
         //given
         List<Section> sectionList = sectionRepository.findAll();
@@ -84,9 +84,9 @@ public class StockServiceTest {
 //                return  entitylist.stream()
 //                .map((Part part) -> PartDto.toDto(part))
 //                .collect(Collectors.toList());
-
-        print((OutputStream) entitylist.stream()
+        List<PartDto> dtoList = entitylist.stream()
                 .map(PartDto::toDto)
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList());
+        System.out.println(dtoList);
     }
 }

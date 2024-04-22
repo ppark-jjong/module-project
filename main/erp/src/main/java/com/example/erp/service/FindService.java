@@ -69,10 +69,8 @@ public class FindService {
         List<Part> entitylist = partRepository.findBySection(
                 sectionRepository.findByStorage(
                         storageRepository.findById(storageId).get()).get());
-//                return  entitylist.stream()
-//                .map((Part part) -> PartDto.toDto(part))
-//                .collect(Collectors.toList());
 
+        // return Dto type data
         return entitylist.stream()
                 .map(PartDto::toDto)
                 .toList();

@@ -13,12 +13,11 @@ import lombok.Setter;
 public class ClientDto {
 
     @Builder
-    public ClientDto(String clientId, String password, String name, String tel, String address, int type) {
+    public ClientDto(String clientId, String password, String name, String tel, int type) {
         this.clientId = clientId;
         this.password = password;
         this.name = name;
         this.tel = tel;
-        this.address = address;
         this.type = type;
     }
 
@@ -30,7 +29,6 @@ public class ClientDto {
 
     private String tel;
 
-    private String address;
 
     private int type;
 
@@ -40,7 +38,6 @@ public class ClientDto {
                 .password(client.getPassword())
                 .name(client.getName())
                 .tel(client.getTel())
-                .address(client.getAddress())
                 .type(client.getType())
                 .build();
     }
@@ -51,7 +48,6 @@ public class ClientDto {
                 .password(password)
                 .name(name)
                 .tel(tel)
-                .address(address)
                 .type(type)
                 .build();
     }
