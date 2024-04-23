@@ -19,7 +19,7 @@ public class DeliveryInfor {
     public DeliveryInfor(Long deliveryInForId, Date eta, int count, ArrivalCity arrivalCity,
                          Client client, Product product, String remark, String address) {
         this.deliveryInForId = deliveryInForId;
-        this.client = client;
+       this.client = client;
         this.product = product;
         this.arrivalCity = arrivalCity;
         this.address = address;
@@ -32,7 +32,7 @@ public class DeliveryInfor {
     @Id
     @Column(name = "delivery_infor_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long deliveryInForId;
+    private Long deliveryInforId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
@@ -61,6 +61,6 @@ public class DeliveryInfor {
     private String remark;
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "deliveryInFor")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "deliveryInfor")
     private List<Shipment> shipmentList;
 }

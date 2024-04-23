@@ -13,9 +13,11 @@ import java.util.List;
 @NoArgsConstructor
 public class ArrivalCity {
     @Builder
-    public ArrivalCity(Long arrivalCityId, String city) {
+    public ArrivalCity(Long arrivalCityId, String city, String longtitue, String lattitue) {
         this.arrivalCityId = arrivalCityId;
         this.city = city;
+        this.longtitue = longtitue;
+        this.lattitue = lattitue;
     }
 
     @Id
@@ -26,9 +28,18 @@ public class ArrivalCity {
     @Column(name = "city")
     private String city;
 
+    @Column(name = "longtitue")
+    private String longtitue;
+
+    @Column(name = "lattitue")
+    private String lattitue;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "arrivalCity")
     private List<Storage> storageList;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "arrivalCity")
     private List<DeliveryInfor> deliveryInforList;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "arrivalCity")
+    private List<DeliveryType> deliveryTypeList;
 }
