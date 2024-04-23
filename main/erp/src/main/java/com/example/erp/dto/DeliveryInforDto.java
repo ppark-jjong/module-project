@@ -30,7 +30,6 @@ public class DeliveryInforDto {
     public DeliveryInforDto(Long deliveryInforId, String clientId, Long productId,
                             Long arrivalCityId, String address, int count, Date eta, String remark) {
         this.deliveryInforId = deliveryInforId;
-
         this.clientId = clientId;
         this.productId = productId;
         this.arrivalCityId = arrivalCityId;

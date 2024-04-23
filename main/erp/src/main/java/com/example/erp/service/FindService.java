@@ -12,7 +12,6 @@ import java.util.List;
 
 @Service
 @Slf4j
-// JPA Find와 관련된 서비스
 public class FindService {
     private final StorageRepository storageRepository;
     private final SectionRepository sectionRepository;

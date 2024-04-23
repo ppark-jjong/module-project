@@ -76,7 +76,6 @@ public class ShipOutService {
         //특정 storage 찾기
         Optional<Storage> currentStorage = storageRepository.
                 findByArrivalCity(arrivalCityRepository.findById(arrivalCityId).get());
-
         //특정 storage에 있는 part 찾기
         Optional<Part> currentPart = partRepository
                 .findByProductAndStorage(productRepository

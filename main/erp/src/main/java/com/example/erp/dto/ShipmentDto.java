@@ -15,11 +15,11 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ShipmentDto {
     @Builder
-    public ShipmentDto(Long shipmentId, Long part, Long deliveryType, Long deliveryInfor, String departures, int state) {
+    public ShipmentDto(Long shipmentId, Long part, Long deliveryType, Long deliveryInFor, String departures, int state) {
         this.shipmentId = shipmentId;
         this.part = part;
         this.deliveryType = deliveryType;
-        this.deliveryInfor = deliveryInfor;
+        this.deliveryInFor = deliveryInFor;
         this.departures = departures;
         this.state = state;
     }
@@ -30,7 +30,7 @@ public class ShipmentDto {
 
     private Long deliveryType;
 
-    private Long deliveryInfor;
+    private Long deliveryInFor;
 
     private String departures;
 
@@ -41,7 +41,7 @@ public class ShipmentDto {
                 .shipmentId(shipment.getShipmentId())
                 .part(shipment.getPart().getPartId())
                 .deliveryType(shipment.getDeliveryType().getDeliveryTypeId())
-                .deliveryInfor(shipment.getShipmentId())
+                .deliveryInFor(shipment.getShipmentId())
                 .departures(shipment.getDepartures())
                 .state(shipment.getState())
                 .build();
