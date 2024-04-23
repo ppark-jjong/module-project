@@ -14,12 +14,11 @@ import java.util.List;
 public class Client {
 
     @Builder
-    public Client(String clientId, String password, String name, String tel, String address, int type) {
+    public Client(String clientId, String password, String name, String tel, int type) {
         this.clientId = clientId;
         this.password = password;
         this.name = name;
         this.tel = tel;
-        this.address = address;
         this.type = type;
     }
 
@@ -35,9 +34,6 @@ public class Client {
 
     @Column(name = "tel")
     private String tel;
-
-    @Column(name = "address")
-    private String address;
 
     @Column(name = "type")
     private int type;

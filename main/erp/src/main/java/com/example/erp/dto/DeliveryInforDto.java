@@ -18,6 +18,8 @@ public class DeliveryInforDto {
 
     private Long arrivalCityId;
 
+    private String address;
+
     private int count;
 
     private Date eta;
@@ -26,11 +28,13 @@ public class DeliveryInforDto {
 
     @Builder
     public DeliveryInforDto(Long deliveryInforId, String clientId, Long productId,
-                            Long arrivalCityId, int count, Date eta, String remark) {
+                            Long arrivalCityId, String address, int count, Date eta, String remark) {
         this.deliveryInforId = deliveryInforId;
+
         this.clientId = clientId;
         this.productId = productId;
         this.arrivalCityId = arrivalCityId;
+        this.address = address;
         this.count = count;
         this.eta = eta;
         this.remark = remark;
@@ -43,6 +47,7 @@ public class DeliveryInforDto {
                 .clientId(deliveryInfor.getClient().getClientId())
                 .productId(deliveryInfor.getProduct().getProductId())
                 .arrivalCityId(deliveryInfor.getArrivalCity().getArrivalCityId())
+                .address(deliveryInfor.getAddress())
                 .count(deliveryInfor.getCount())
                 .eta(deliveryInfor.getEta())
                 .remark(deliveryInfor.getRemark())
@@ -57,10 +62,12 @@ public class DeliveryInforDto {
                 .client(client)
                 .product(product)
                 .arrivalCity(arrivalCity)
+                .address(address)
                 .count(count)
                 .eta(eta)
                 .remark(remark)
                 .build();
     }
+
 }
 
