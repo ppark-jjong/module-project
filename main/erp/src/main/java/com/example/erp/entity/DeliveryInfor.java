@@ -16,11 +16,13 @@ import java.util.List;
 public class DeliveryInfor {
 
     @Builder
-    public DeliveryInfor(Long deliveryInforId, Date eta, int count, ArrivalCity arrivalCity, Client client, Product product, String remark) {
-        this.deliveryInforId = deliveryInforId;
-        this.client = client;
+    public DeliveryInfor(Long deliveryInForId, Date eta, int count, ArrivalCity arrivalCity,
+                         Client client, Product product, String remark, String address) {
+        this.deliveryInForId = deliveryInForId;
+       this.client = client;
         this.product = product;
         this.arrivalCity = arrivalCity;
+        this.address = address;
         this.count = count;
         this.remark = remark;
         this.eta = eta;
@@ -44,6 +46,9 @@ public class DeliveryInfor {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "arrival_city_id")
     private ArrivalCity arrivalCity;
+
+    @Column(name = "address")
+    private String address;
 
     @Column(name = "count")
     private int count;
