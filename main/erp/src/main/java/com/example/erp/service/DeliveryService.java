@@ -1,5 +1,8 @@
 package com.example.erp.service;
 
+import com.example.erp.dto.*;
+import com.example.erp.entity.DeliveryInfor;
+import com.example.erp.entity.DeliveryType;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -7,6 +10,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.apache.tomcat.util.json.JSONParser;
 import org.h2.util.json.JSONObject;
+import org.hibernate.annotations.processing.Find;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.*;
@@ -14,14 +18,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.List;
+import java.util.Random;
+
 
 @Service
 @PropertySource("classpath:/application-API-KEY.properties")
 public class DeliveryService {
+    private final FindService findService;
+
+    public DeliveryService(FindService findService) {
+        this.findService = findService;
+    }
+
     @Value("${kakao.admin.key}")
     private String kakao_admin_key;
 
-    public int getDistance(String originX, String originY, String destX, String destY ) {
+    // 좌표값을 바탕으로 출발지 - 목적지 사이의 거리를 계산 (kakao api)
+    public int getDistance(String originX, String originY, String destX, String destY) {
         int distance = 0;
 
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -68,5 +82,62 @@ public class DeliveryService {
 
         return distance;
     }
-}
 
+    // 거리별 deliveryType 지정
+    public Long getDeliveryType(String originX, String originY, String destX, String destY) {
+        int distance = getDistance(originX, originY, destX, destY);
+        Long deliveryType = null;
+
+        if (distance >= 150000) {           // 150km
+            deliveryType = 4L;
+        } else if (distance > 100000) {     // 100km
+            deliveryType = 3L;
+        } else if (distance > 50000) {      // 50km
+            deliveryType = 2L;
+        } else if (distance > 20000) {      // 20km
+            deliveryType = 1L;
+        }
+
+        return deliveryType;
+    }
+
+    // shipment 생성
+    public ShipmentDto createShipment(DeliveryInforDto deliveryInforDto) {
+        // storage 위치 조회 단계가 많기 때문에 DeliveryInfo 테이블에 '출발지 주소' 속성 추가를 고려해보아야 할 수도
+        ArrivalCityDto storageLocation = findService.findArrivalCityById(
+                findService.findStorageById(
+                        findService.findPartByProductId(deliveryInforDto.getProductId()).getStorageId()
+                ).getArrivalCity()
+        );
+
+        ArrivalCityDto clientLocation = findService.findArrivalCityById(deliveryInforDto.getArrivalCityId());
+
+        Long deliveryType = getDeliveryType(storageLocation.getLongtitue(), storageLocation.getLattitue(),
+                clientLocation.getLongtitue(), clientLocation.getLattitue());
+
+        // client 주소지에 부합하는 배송 기사 1차 탐색
+        List<DeliveryTypeDto> deliveryTypeDtoList = findService
+                .findDeliveryTypeDtoListByArrivalCityAndDeliveryType(clientLocation.getArrivalCityId(), deliveryType);
+
+        // 배송 기사 변수
+        DeliveryType targetDeliveryType;
+
+        // 조건 부합하는 배송 기사가 한 명 밖에 없을 시 바로 배정
+        if (deliveryTypeDtoList.size() == 1) {
+            DeliveryTypeDto deliveryTypeDto = deliveryTypeDtoList.get(0);
+            targetDeliveryType = deliveryTypeDto.toEntity(
+                    findService.findDeliveryUserById(deliveryTypeDto.getDeliveryUserId()).toEntity(),
+                    findService.findArrivalCityById(deliveryTypeDto.getArrivalCityId()).toEntity()
+            );
+        } else if (deliveryTypeDtoList.size() > 1) {
+            // 조건에 부합하는 배송 기사가 다수일 경우의 조건을 정하지 않아서 일단 랜덤 배정하였음
+            Random random = new Random();
+            int randomIndex = random.nextInt(deliveryTypeDtoList.size());
+            DeliveryTypeDto deliveryTypeDto = deliveryTypeDtoList.get(randomIndex);
+            targetDeliveryType = deliveryTypeDto.toEntity(
+                    findService.findDeliveryUserById(deliveryTypeDto.getDeliveryUserId()).toEntity(),
+                    findService.findArrivalCityById(deliveryTypeDto.getArrivalCityId()).toEntity()
+            );
+        }// 고객 주소와 1:1로 매칭되는 정확한 배송 기사가 없는 경우 else if ()
+    }
+}

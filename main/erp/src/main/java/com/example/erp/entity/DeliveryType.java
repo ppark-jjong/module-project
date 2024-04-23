@@ -16,7 +16,7 @@ import java.util.List;
 public class DeliveryType {
 
     @Builder
-    public DeliveryType(Long deliveryTypeId, DeliveryUser deliveryUser, String deliveryType, ArrivalCity arrivalCity) {
+    public DeliveryType(Long deliveryTypeId, DeliveryUser deliveryUser, Long deliveryType, ArrivalCity arrivalCity) {
         this.deliveryTypeId = deliveryTypeId;
         this.deliveryUser = deliveryUser;
         this.deliveryType = deliveryType;
@@ -33,7 +33,7 @@ public class DeliveryType {
     private DeliveryUser deliveryUser;
 
     @Column(name = "delivery_type")
-    private String deliveryType;
+    private Long deliveryType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "arrival_city_id")

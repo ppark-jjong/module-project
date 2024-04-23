@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.swing.text.html.Option;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +20,7 @@ public interface PartRepository extends JpaRepository<Part, Long> {
 
     List<Part> findBySection(Section section);
 
+    Optional<Part> findByProduct_ProductId(Long productId);
     Optional<Part> findByProduct_ProductIdAndStorage_StorageId(Long partId, Long storageId);
     Optional<Part> findByProductAndStorage(Product product, Storage storage);
 

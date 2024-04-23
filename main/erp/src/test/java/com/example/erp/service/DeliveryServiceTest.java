@@ -25,7 +25,7 @@ public class DeliveryServiceTest {
         System.out.println("distance = " + distance);
     }
 
-    public int getDistance(String originX, String originY, String destX, String destY ) {
+    public int getDistance(String originX, String originY, String destX, String destY) {
         int distance = 0;
 
         HttpHeaders httpHeaders = new HttpHeaders();
