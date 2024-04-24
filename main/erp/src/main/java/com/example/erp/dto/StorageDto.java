@@ -3,6 +3,7 @@ package com.example.erp.dto;
 import com.example.erp.entity.ArrivalCity;
 import com.example.erp.entity.Product;
 import com.example.erp.entity.Storage;
+import jakarta.persistence.Column;
 import lombok.*;
 
 @Getter
@@ -10,11 +11,13 @@ import lombok.*;
 public class StorageDto {
 
     @Builder
-    public StorageDto(long storageId, int state, int capacity, String address, Long arrivalCity) {
+    public StorageDto(long storageId, int state, int capacity, String address, String x, String y, Long arrivalCity) {
         this.storageId = storageId;
         this.state = state;
         this.capacity = capacity;
         this.address = address;
+        this.x = x;
+        this.y = y;
         this.arrivalCity = arrivalCity;
     }
 
@@ -27,6 +30,10 @@ public class StorageDto {
 
     private String address;
 
+    private String x;
+
+    private String y;
+
     private Long arrivalCity;
 
     public static StorageDto toDto(Storage storage) {
@@ -35,6 +42,8 @@ public class StorageDto {
                 .state(storage.getState())
                 .capacity(storage.getCapacity())
                 .address(storage.getAddress())
+                .x(storage.getX())
+                .y(storage.getY())
                 .arrivalCity(storage.getArrivalCity().getArrivalCityId())
                 .build();
     }
@@ -45,6 +54,8 @@ public class StorageDto {
                 .state(state)
                 .capacity(capacity)
                 .address(address)
+                .x(x)
+                .y(y)
                 .arrivalCity(arrivalCity)
                 .build();
     }

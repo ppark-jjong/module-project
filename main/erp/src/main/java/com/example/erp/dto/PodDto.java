@@ -12,7 +12,7 @@ import java.util.Date;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PodDto {
     @Builder
-    public PodDto(Long podId, Long shipment, Date time) {
+    public PodDto(Long podId, Long shipment, Date time, String status) {
         this.podId = podId;
         this.shipment = shipment;
         this.time = time;
@@ -24,11 +24,15 @@ public class PodDto {
 
     private Date time;
 
+    private String status;
+
+
     public PodDto toDto(Pod pod) {
         return PodDto.builder()
                 .podId(pod.getPodId())
                 .shipment(pod.getShipment().getShipmentId())
                 .time(pod.getTime())
+                .status(pod.getStatus())
                 .build();
     }
 
@@ -37,6 +41,7 @@ public class PodDto {
                 .podId(podId)
                 .shipment(shipment)
                 .time(time)
+                .status(status)
                 .build();
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -26,11 +27,15 @@ public class ShipOutService {
     private DeliveryUserRepository deliveryUserRepository;
     private ShipmentRepository shipmentRepository;
     private ArrivalCityRepository arrivalCityRepository;
+
+    private final DeliveryService deliveryService;
+
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-    public ShipOutService(StorageRepository storageRepository, PartRepository partRepository) {
+    public ShipOutService(StorageRepository storageRepository, PartRepository partRepository, DeliveryService deliveryService) {
         this.storageRepository = storageRepository;
         this.partRepository = partRepository;
+        this.deliveryService = deliveryService;
     }
 
     //    주문 생성
@@ -87,22 +92,34 @@ public class ShipOutService {
     }
 
 
-    //먼저 탐색한 스토리지를 제외하고 주문의 Product가 있는 Storage 
-    public StorageDto findStockStorage(ProductDto productDto, Long storageId) {
-        // 파라미터로 받은 스토리지를 제외시켜야함(먼저 탐색한 스토리지임) => order by storage Id
-        List<Part> findStorageList = partRepository.findByPartExceptionStorage(storageId);
+    //먼저 탐색한 스토리지를 제외하고 주문의 Product가 있는 Storage들 중 가장 가까운 Storage 리턴
+    //파라미터로 현재 주문의 part와
+    public StorageDto findStockStorage(PartDto partDto, String x, String y) {
+        // 파라미터로 part에는 먼저 탐색한 storage가 있으므로 이를 기준으로 쿼리를 돌림
+        List<Part> findStorageList = partRepository.findByPartExceptionStorage(partDto.getStorageId(), partDto.getProductId());
 
-        Optional<Storage> storage = storageRepository.findById(
-                PartDto.toDto(selectPart).getStorageId());
+        // 지역변수  초기화
+        int result = 0;
+        Part currentStorage = null;
 
-        return StorageDto.toDto(storage.get());
+        // 각각의 파트에 있는 스토리지의 주소를 파라미터로 넣어 좌표 값을 리턴 받는 메서드
+        for (Part part : findStorageList) {
+            String currentX = StorageDto.toDto(part.getStorage()).getX();
+            String currentY = StorageDto.toDto(part.getStorage()).getY();
+
+            int difference = deliveryService.getDistance(currentX, currentY, x, y);
+            if (difference > result) {
+                result = difference;
+                currentStorage = part;
+            }
+        }
+        if (currentStorage == null) {
+            log.info("가까운 스토리지 찾기 실패 part 재고를 확인하거나, 로직  오류");
+            return null;
+        } else {
+            return StorageDto.toDto(currentStorage.getStorage());
+        }
     }
 
-
-
-    // 제일 가까운 스토리지를 리턴해주는 메서드
-//    public StorageDto findNearStorage(String destination) {
-//
-//    }
 
 }

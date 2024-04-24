@@ -25,8 +25,8 @@ public interface PartRepository extends JpaRepository<Part, Long> {
     Optional<Part> findByProductAndStorage(Product product, Storage storage);
 
     @Query(
-            value = "select * from part where storage_id != :storageId order by stroage_id",
+            value = "select ex.* from  (select * from part where storage_id != :storageId order by storage_id) as ex where ex.product_id = :productId order by ex.storage_id",
             nativeQuery = true)
-    List<Part> findByPartExceptionStorage(@Param(value = "storageId") Long storageId);
+    List<Part> findByPartExceptionStorage(@Param(value = "storageId") Long storageId, @Param(value = "productId")Long productId);
 
 }
