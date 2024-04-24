@@ -68,10 +68,11 @@ public class ShipOutService {
         }
     }
 
-    //재고 파악 메서드 (주문과 일치하는 물품 재고 찾기)
-    public PartDto checkPart(DeliveryInforDto deliveryInforDto) {
-        Long arrivalCityId = deliveryInforDto.getArrivalCityId();
-        Long currentProductDtoId = deliveryInforDto.getProductId();
+    //    재고 파악 메서드 (주문과 일치하는 물품 재고 찾기 - storage값 지정으로 찾아줌)
+    public PartDto checkPart(DeliveryInforDto deliveryInForDto) {
+        Long arrivalCityId = deliveryInForDto.getArrivalCityId();
+        Long currentProductDtoId = deliveryInForDto.getProductId();
+
 
         //특정 storage 찾기
         Optional<Storage> currentStorage = storageRepository.
@@ -100,8 +101,8 @@ public class ShipOutService {
 
 
     // 제일 가까운 스토리지를 리턴해주는 메서드
-    public StorageDto findNearStorage(String destination) {
-        
-    }
+//    public StorageDto findNearStorage(String destination) {
+//
+//    }
 
 }

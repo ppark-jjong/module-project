@@ -16,10 +16,10 @@ import java.util.List;
 public class DeliveryInfor {
 
     @Builder
-    public DeliveryInfor(Long deliveryInForId, Date eta, int count, ArrivalCity arrivalCity,
+    public DeliveryInfor(Long deliveryInforId, Date eta, int count, ArrivalCity arrivalCity,
                          Client client, Product product, String remark, String address) {
-        this.deliveryInForId = deliveryInForId;
-       this.client = client;
+        this.deliveryInforId = deliveryInforId;
+        this.client = client;
         this.product = product;
         this.arrivalCity = arrivalCity;
         this.address = address;

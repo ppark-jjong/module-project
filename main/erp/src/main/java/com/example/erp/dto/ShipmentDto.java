@@ -47,13 +47,13 @@ public class ShipmentDto {
                 .build();
     }
 
-    public Shipment toEntity(Part part, DeliveryType deliveryType, DeliveryInfor deliveryInFor){
+    public Shipment toEntity(Part part, DeliveryType deliveryType, DeliveryInfor deliveryInfor){
         return Shipment
                 .builder()
                 .shipmentId(shipmentId)
                 .part(part)
                 .deliveryType(deliveryType)
-                .deliveryInFor(deliveryInFor)
+                .deliveryInfor(deliveryInfor)
                 .departures(departures)
                 .state(state)
                 .build();

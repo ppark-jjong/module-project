@@ -27,10 +27,9 @@ public class DeliveryInforDto {
     private String remark;
 
     @Builder
-
-    public DeliveryInForDto(Long deliveryInForId, String clientId, Long productId,
+    public DeliveryInforDto(Long deliveryInforId, String clientId, Long productId,
                             Long arrivalCityId, String address, int count, Date eta, String remark) {
-        this.deliveryInForId = deliveryInForId;
+        this.deliveryInforId = deliveryInforId;
         this.clientId = clientId;
         this.productId = productId;
         this.arrivalCityId = arrivalCityId;

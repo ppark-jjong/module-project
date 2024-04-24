@@ -7,20 +7,20 @@ import java.util.Date;
 
 @Getter
 @Setter(AccessLevel.PUBLIC)
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DeliveryTypeDto {
 
     private Long deliveryTypeId;
 
     private Long deliveryUserId;
 
-    private String deliveryType;
+    private Long deliveryType;
 
     private Long arrivalCityId;
 
 
     @Builder
-    public DeliveryTypeDto(Long deliveryTypeId, Long deliveryUserId, String deliveryType, Long arrivalCityId) {
+    public DeliveryTypeDto(Long deliveryTypeId, Long deliveryUserId, Long deliveryType, Long arrivalCityId) {
         this.deliveryTypeId = deliveryTypeId;
         this.deliveryUserId = deliveryUserId;
         this.deliveryType = deliveryType;
