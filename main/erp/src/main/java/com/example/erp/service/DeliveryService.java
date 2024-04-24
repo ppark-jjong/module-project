@@ -18,9 +18,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Service
 @PropertySource("classpath:/application-API-KEY.properties")
 public class DeliveryService {
+
     @Value("${kakao.admin.key}")
     private String kakao_admin_key;
 
+    //A -> B 까지 거리 구하기 (길찾기가 아니네..?)
     public int getDistance(String originX, String originY, String destX, String destY ) {
         int distance = 0;
 

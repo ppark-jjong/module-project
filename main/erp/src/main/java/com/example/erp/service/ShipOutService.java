@@ -68,11 +68,7 @@ public class ShipOutService {
         }
     }
 
-    //재고 파악 메서드 (주문과 일치하는 물품 재고 찾
-//    public PartDto checkPart(DeliveryInForDto deliveryInForDto) {
-//        Long arrivalCityId = deliveryInForDto.getArrivalCityId();
-//        Long currentProductDtoId = deliveryInForDto.getProductId();
-
+    //재고 파악 메서드 (주문과 일치하는 물품 재고 찾기)
     public PartDto checkPart(DeliveryInforDto deliveryInforDto) {
         Long arrivalCityId = deliveryInforDto.getArrivalCityId();
         Long currentProductDtoId = deliveryInforDto.getProductId();
@@ -80,27 +76,28 @@ public class ShipOutService {
         //특정 storage 찾기
         Optional<Storage> currentStorage = storageRepository.
                 findByArrivalCity(arrivalCityRepository.findById(arrivalCityId).get());
+
         //특정 storage에 있는 part 찾기
         Optional<Part> currentPart = partRepository
                 .findByProductAndStorage(productRepository
                         .findById(currentProductDtoId).get(), currentStorage.get());
 
-
         return currentPart.map(PartDto::toDto).orElse(null);
     }
 
 
-    //먼저 탐색한 스토리지를 제외하고 파트 재고를 파악 후 그 파트가 있는 스토리지를 리턴
+    //먼저 탐색한 스토리지를 제외하고 주문의 Product가 있는 Storage 
     public StorageDto findStockStorage(ProductDto productDto, Long storageId) {
         // 파라미터로 받은 스토리지를 제외시켜야함(먼저 탐색한 스토리지임) => order by storage Id
         List<Part> findStorageList = partRepository.findByPartExceptionStorage(storageId);
-
 
         Optional<Storage> storage = storageRepository.findById(
                 PartDto.toDto(selectPart).getStorageId());
 
         return StorageDto.toDto(storage.get());
     }
+
+
 
     // 제일 가까운 스토리지를 리턴해주는 메서드
     public StorageDto findNearStorage(String destination) {
