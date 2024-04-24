@@ -25,6 +25,7 @@ import java.util.Random;
 @Service
 @PropertySource("classpath:/application-API-KEY.properties")
 public class DeliveryService {
+
     private final FindService findService;
 
     public DeliveryService(FindService findService) {
@@ -36,6 +37,7 @@ public class DeliveryService {
 
     // 좌표값을 바탕으로 출발지 - 목적지 사이의 거리를 계산 (kakao api)
     public int getDistance(String originX, String originY, String destX, String destY) {
+
         int distance = 0;
 
         //Http 서버와 통신 가능한 자바 라이브러리. 응답을 JSON/xml 형식으로 변환 가능
