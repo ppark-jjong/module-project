@@ -13,4 +13,5 @@ import java.util.List;
 public interface DeliveryTypeRepository extends JpaRepository<DeliveryType, Long> {
     DeliveryType findByArrivalCity_ArrivalCityId(Long arrivalCityId);
     List<DeliveryType> findAllByArrivalCity_ArrivalCityIdAndDeliveryType(Long arrivalCityId, Long deliveryType);
+    List<DeliveryType> findAllByDeliveryType(Long deliveryType);
 }

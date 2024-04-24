@@ -86,9 +86,21 @@ public class FindService {
         return PartDto.toDto(part);
     }
 
-    // 도시, 배송 타입으로 List<DeliveryTypeDto> 찾기
+    // 배송 타입으로 DeliveryType 리스트 찾기
+    public List<DeliveryTypeDto> findDeliveryTypeByDeliveryType(Long deliveryTypeId) {
+        List<DeliveryType> deliveryTypeList = deliveryTypeRepository.findAllByDeliveryType(deliveryTypeId);
+
+        List<DeliveryTypeDto> deliveryTypeDtoList = new ArrayList<>();
+        for (DeliveryType deliveryType : deliveryTypeList) {
+            deliveryTypeDtoList.add(DeliveryTypeDto.toDto(deliveryType));
+        }
+
+        return deliveryTypeDtoList;
+    }
+
+    // 도시, 배송 타입으로 DeliveryType 리스트 찾기
     // 함수명 뭔
-    public List<DeliveryTypeDto> findDeliveryTypeDtoListByArrivalCityAndDeliveryType(Long arrivalCityId, Long deliveryTypeId) {
+    public List<DeliveryTypeDto> findDeliveryTypeListByArrivalCityAndDeliveryType(Long arrivalCityId, Long deliveryTypeId) {
         List<DeliveryType> deliveryTypeList = deliveryTypeRepository
                 .findAllByArrivalCity_ArrivalCityIdAndDeliveryType(arrivalCityId, deliveryTypeId);
 

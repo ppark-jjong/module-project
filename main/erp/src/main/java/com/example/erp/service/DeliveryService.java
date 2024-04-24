@@ -38,14 +38,13 @@ public class DeliveryService {
     public int getDistance(String originX, String originY, String destX, String destY) {
         int distance = 0;
 
-        HttpHeaders httpHeaders = new HttpHeaders();
-
         //Http 서버와 통신 가능한 자바 라이브러리. 응답을 JSON/xml 형식으로 변환 가능
         RestTemplate restTemplate = new RestTemplate();
 
         final String URL = "https://apis-navi.kakaomobility.com/v1/directions";
 
         // header 설정
+        HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Authorization", "KakaoAK " + kakao_admin_key);
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
@@ -101,43 +100,50 @@ public class DeliveryService {
         return deliveryType;
     }
 
+
+
     // shipment 생성
-//    public ShipmentDto createShipment(DeliveryInforDto deliveryInforDto) {
-//        // storage 위치 조회 단계가 많기 때문에 DeliveryInfo 테이블에 '출발지 주소' 속성 추가를 고려해보아야 할 수도
-//        ArrivalCityDto storageLocation = findService.findArrivalCityById(
-//                findService.findStorageById(
-//                        findService.findPartByProductId(deliveryInforDto.getProductId()).getStorageId()
-//                ).getArrivalCity()
-//        );
-//
-//        ArrivalCityDto clientLocation = findService.findArrivalCityById(deliveryInforDto.getArrivalCityId());
-//
-//        Long deliveryType = getDeliveryType(storageLocation.getLongtitue(), storageLocation.getLattitue(),
-//                clientLocation.getLongtitue(), clientLocation.getLattitue());
-//
-//        // client 주소지에 부합하는 배송 기사 1차 탐색
-//        List<DeliveryTypeDto> deliveryTypeDtoList = findService
-//                .findDeliveryTypeDtoListByArrivalCityAndDeliveryType(clientLocation.getArrivalCityId(), deliveryType);
-//
-//        // 배송 기사 변수
-//        DeliveryType targetDeliveryType;
-//
-//        // 조건 부합하는 배송 기사가 한 명 밖에 없을 시 바로 배정
-//        if (deliveryTypeDtoList.size() == 1) {
-//            DeliveryTypeDto deliveryTypeDto = deliveryTypeDtoList.get(0);
-//            targetDeliveryType = deliveryTypeDto.toEntity(
-//                    findService.findDeliveryUserById(deliveryTypeDto.getDeliveryUserId()).toEntity(),
-//                    findService.findArrivalCityById(deliveryTypeDto.getArrivalCityId()).toEntity()
-//            );
-//        } else if (deliveryTypeDtoList.size() > 1) {
-//            // 조건에 부합하는 배송 기사가 다수일 경우의 조건을 정하지 않아서 일단 랜덤 배정하였음
-//            Random random = new Random();
-//            int randomIndex = random.nextInt(deliveryTypeDtoList.size());
-//            DeliveryTypeDto deliveryTypeDto = deliveryTypeDtoList.get(randomIndex);
-//            targetDeliveryType = deliveryTypeDto.toEntity(
-//                    findService.findDeliveryUserById(deliveryTypeDto.getDeliveryUserId()).toEntity(),
-//                    findService.findArrivalCityById(deliveryTypeDto.getArrivalCityId()).toEntity()
-//            );
-//        }// 고객 주소와 1:1로 매칭되는 정확한 배송 기사가 없는 경우 else if ()
-//    }
+    public ShipmentDto createShipment(DeliveryInforDto deliveryInforDto) {
+        // 출발지 주소
+        ArrivalCityDto storageLocation = findService.findArrivalCityById(
+                findService.findStorageById(
+                        findService.findPartByProductId(deliveryInforDto.getProductId()).getStorageId()
+                ).getArrivalCity()
+        );
+
+        // 목적지 주소
+        ArrivalCityDto clientLocation = findService.findArrivalCityById(deliveryInforDto.getArrivalCityId());
+
+        Long deliveryType = getDeliveryType(storageLocation.getLongtitue(), storageLocation.getLattitue(),
+                clientLocation.getLongtitue(), clientLocation.getLattitue());
+
+        // 배송 기사 변수
+        DeliveryType targetDeliveryType;
+
+        // client 주소지에 부합하는 배송 기사 리스트 탐색
+        List<DeliveryTypeDto> deliveryTypeDtoList = findService
+                .findDeliveryTypeListByArrivalCityAndDeliveryType(clientLocation.getArrivalCityId(), deliveryType);
+
+        // 리스트에서 조건 부합하는 배송 기사가 한 명 밖에 없을 시 바로 배정
+        if (deliveryTypeDtoList.size() == 1) {
+            DeliveryTypeDto deliveryTypeDto = deliveryTypeDtoList.get(0);
+            targetDeliveryType = deliveryTypeDto.toEntity(
+                    findService.findDeliveryUserById(deliveryTypeDto.getDeliveryUserId()).toEntity(),
+                    findService.findArrivalCityById(deliveryTypeDto.getArrivalCityId()).toEntity()
+            );
+        } else if (deliveryTypeDtoList.size() > 1) {
+            // 조건에 부합하는 배송 기사가 다수일 경우, 일단 랜덤 배정하였음
+            Random random = new Random();
+            int randomIndex = random.nextInt(deliveryTypeDtoList.size());
+            DeliveryTypeDto deliveryTypeDto = deliveryTypeDtoList.get(randomIndex);
+            targetDeliveryType = deliveryTypeDto.toEntity(
+                    findService.findDeliveryUserById(deliveryTypeDto.getDeliveryUserId()).toEntity(),
+                    findService.findArrivalCityById(deliveryTypeDto.getArrivalCityId()).toEntity()
+            );
+        } else if (deliveryTypeDtoList.isEmpty()) {
+            // 고객 주소와 1:1로 매칭되는 정확한 배송 기사가 없는 경우
+
+        }
+
+    }
 }
