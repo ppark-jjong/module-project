@@ -14,10 +14,11 @@ import java.util.Date;
 public class Pod {
 
     @Builder
-    public Pod(Long podId, Shipment shipment, Date time) {
+    public Pod(Long podId, Shipment shipment, Date time, String status) {
         this.podId = podId;
         this.shipment = shipment;
         this.time = time;
+        this.status = status;
     }
 
     @Id
@@ -31,5 +32,8 @@ public class Pod {
 
     @Column(name = "time")
     private Date time;
+
+    @Column(name = "status")
+    private String status;
 
 }

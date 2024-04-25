@@ -15,11 +15,13 @@ import java.util.List;
 public class Storage {
 
     @Builder
-    public Storage(Long storageId, int state, int capacity, String address, ArrivalCity arrivalCity) {
+    public Storage(Long storageId, int state, int capacity, String address, String x, String y, ArrivalCity arrivalCity) {
         this.storageId = storageId;
         this.state = state;
         this.capacity = capacity;
         this.address = address;
+        this.x = x;
+        this.y = y;
         this.arrivalCity = arrivalCity;
     }
 
@@ -36,6 +38,12 @@ public class Storage {
 
     @Column(name = "address")
     private String address;
+
+    @Column
+    private String x;
+
+    @Column
+    private String y;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "arrival_city_id")
