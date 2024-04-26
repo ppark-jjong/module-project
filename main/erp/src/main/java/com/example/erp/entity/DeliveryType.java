@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "delivery_type")
@@ -42,4 +43,18 @@ public class DeliveryType {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "deliveryType")
     private List<Shipment> shipmentList;
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof DeliveryType) {
+            DeliveryType d = (DeliveryType)o;
+            return this.hashCode()== d.hashCode();
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return (this.deliveryTypeId).hashCode();
+    }
 }
