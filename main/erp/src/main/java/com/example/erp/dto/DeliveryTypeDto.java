@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Getter
 @Setter(AccessLevel.PUBLIC)
@@ -25,6 +26,20 @@ public class DeliveryTypeDto {
         this.deliveryUserId = deliveryUserId;
         this.deliveryType = deliveryType;
         this.arrivalCityId = arrivalCityId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof DeliveryTypeDto) {
+            DeliveryTypeDto d = (DeliveryTypeDto) o;
+            return this.hashCode() == d.hashCode();
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return (this.deliveryTypeId).hashCode();
     }
 
     public static DeliveryTypeDto toDto(DeliveryType deliveryType) {

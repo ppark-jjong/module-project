@@ -1,6 +1,7 @@
 package com.example.erp.dto;
 
 import com.example.erp.entity.ArrivalCity;
+import com.example.erp.entity.DeliveryType;
 import lombok.*;
 
 @Getter
@@ -37,5 +38,19 @@ public class ArrivalCityDto {
                 .longtitue(longtitue)
                 .lattitue(lattitue)
                 .build();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof ArrivalCityDto) {
+            ArrivalCityDto a = (ArrivalCityDto)o;
+            return this.hashCode()== a.hashCode();
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return (this.arrivalCityId).hashCode();
     }
 }

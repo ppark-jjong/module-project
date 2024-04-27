@@ -144,8 +144,11 @@ public class DeliveryService {
             );
         } else if (deliveryTypeDtoList.isEmpty()) {
             // 고객 주소와 1:1로 매칭되는 정확한 배송 기사가 없는 경우
-
+            List<ArrivalCityDto> arrivalCityDtoList = findService.findAllArrivalCityInDeliveryType();
+            
         }
 
     }
+
+
 }

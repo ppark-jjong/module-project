@@ -1,5 +1,6 @@
 package com.example.erp.entity;
 
+import com.example.erp.dto.ArrivalCityDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,4 +43,18 @@ public class ArrivalCity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "arrivalCity")
     private List<DeliveryType> deliveryTypeList;
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof ArrivalCity) {
+            ArrivalCity a = (ArrivalCity)o;
+            return this.hashCode()== a.hashCode();
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return (this.arrivalCityId).hashCode();
+    }
 }

@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -112,6 +114,17 @@ public class FindService {
         return deliveryTypeDtoList;
     }
 
+    // 모든 DeliveryType에서 중복 없이 ArrivalCity 탐색
+    public List<ArrivalCityDto> findAllArrivalCityInDeliveryType() {
+        Set<ArrivalCityDto> arrivalCityDtoSet = new HashSet<>();
+        List<DeliveryType> deliveryTypeList = deliveryTypeRepository.findAll();
+        for (DeliveryType deliveryType : deliveryTypeList) {
+            arrivalCityDtoSet.add(ArrivalCityDto.toDto(deliveryType.getArrivalCity()));
+        }
+
+        List<ArrivalCityDto> arrivalCityDtoList = new ArrayList<>(arrivalCityDtoSet);
+        return arrivalCityDtoList;
+    }
 
     // 특정 스토리지에 보관되어있는 물품 리스트 찾기
     public List<PartDto> stockPartList(Long storageId) {
